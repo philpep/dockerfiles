@@ -1,0 +1,15 @@
+FROM r.philpep.org/alpine:3.8
+RUN apk add --no-cache \
+    jenkins \
+    git \
+    mercurial \
+    openssh-client \
+    curl \
+    unzip \
+    bash \
+    coreutils
+ENV JENKINS_HOME /var/lib/jenkins
+WORKDIR /var/lib/jenkins
+USER jenkins
+EXPOSE 8080
+CMD ["java", "-Djava.awt.headless=true", "-Xmx1G", "-Xms512M", "-jar", "/usr/share/webapps/jenkins/jenkins.war", "--httpPort=8080"]

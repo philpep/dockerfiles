@@ -1,0 +1,6 @@
+css=/pub/git/cgit-css/cgit.css
+logo=/pub/git/cgit-css/cgit.png
+virtual-root=/pub/git
+remove-suffix=1
+scan-path=/repos
+max-repo-count=100
