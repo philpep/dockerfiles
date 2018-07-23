@@ -122,8 +122,9 @@ class Image(collections.namedtuple('Image', 'name depends')):
     def pull(self):
         run('docker', 'pull', self.name)
 
-    def push(self):
+    def push(self, no_cache=False):
         assert self.is_local
+        self.build(no_cache=no_cache)
         run('docker', 'push', self.name)
 
     def check(self):
@@ -156,8 +157,8 @@ def cmd_build(image, no_cache=False):
     Image.async(lambda i: (i.build, (), {'no_cache': no_cache}), *image)
 
 
-def cmd_push(image):
-    Image.async(lambda i: (i.push, (), {}), *image)
+def cmd_push(image, no_cache=False):
+    Image.async(lambda i: (i.push, (), {'no_cache': no_cache}), *image)
 
 
 def cmd_pull(image):
@@ -207,7 +208,8 @@ if __name__ == '__main__':
         if nargs is not None:
             cmd.add_argument('image', nargs=nargs)
         cmd.set_defaults(func=func)
-    cmds['build'].add_argument('--no-cache', action='store_true')
+    for action in ('build', 'push'):
+        cmds[action].add_argument('--no-cache', action='store_true')
     args = vars(parser.parse_args())
     func = args.pop('func', None)
     Image.registry = args.pop('registry')
