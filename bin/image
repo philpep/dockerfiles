@@ -207,6 +207,8 @@ if __name__ == '__main__':
         cmds[action] = cmd = sub.add_parser(action)
         if nargs is not None:
             cmd.add_argument('image', nargs=nargs)
+        else:
+            cmd.add_argument('image')
         cmd.set_defaults(func=func)
     for action in ('build', 'push'):
         cmds[action].add_argument('--no-cache', action='store_true')
