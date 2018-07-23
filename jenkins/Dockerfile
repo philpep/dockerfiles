@@ -7,7 +7,9 @@ RUN apk add --no-cache \
     curl \
     unzip \
     bash \
-    coreutils
+    coreutils \
+    python3
+RUN pip3 install tox
 ENV JENKINS_HOME /var/lib/jenkins
 WORKDIR /var/lib/jenkins
 USER jenkins
