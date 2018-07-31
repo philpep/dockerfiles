@@ -218,7 +218,7 @@ if __name__ == '__main__':
         else:
             cmd.add_argument('image')
         cmd.set_defaults(func=func)
-    cmds['list'] = sub.add_parser('list')
+    cmds['list'] = sub.add_parser('list', aliases=['ls'])
     cmds['list'].set_defaults(func=cmd_list)
     for action in ('build', 'push'):
         cmds[action].add_argument('--no-cache', action='store_true')
