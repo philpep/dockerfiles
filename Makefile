@@ -4,7 +4,7 @@ ALPINE_DEPENDS=$(shell find * -name Dockerfile | xargs grep -l '^FROM $(REGISTRY
 DEBIAN_DEPENDS=$(shell find * -name Dockerfile | xargs grep -l '^FROM $(REGISTRY)/debian:stretch-slim' | xargs dirname | sed 's@/@:@g')
 MAKEFLAGS += -rR
 
-.PHONY: all clean push pull run exec check $(IMAGES) $(addprefix $(REGISTRY)/,$(IMAGES))
+.PHONY: all clean push pull run exec check checkrebuild $(IMAGES) $(addprefix $(REGISTRY)/,$(IMAGES))
 
 all: $(IMAGES)
 
@@ -41,4 +41,10 @@ ifeq (pull,$(filter pull,$(MAKECMDGOALS)))
 	docker pull $@
 else
 	docker build -t $@ $(subst :,/,$(subst $(REGISTRY)/,,$@))
+endif
+ifeq (checkrebuild,$(filter checkrebuild,$(MAKECMDGOALS)))
+	@(if docker run --entrypoint sh -u root -v $(shell pwd)/check_update.sh:/check_update.sh --rm $@ /check_update.sh | grep 'upgradable from'; then \
+		echo $@ need rebuild; docker build -t $@ $(subst :,/,$(subst $(REGISTRY)/,,$@)); else echo $@ is up-to-date; fi)
+	@(if docker run --entrypoint sh -u root -v $(shell pwd)/check_update.sh:/check_update.sh --rm $@ /check_update.sh | grep 'upgradable from'; then \
+		echo failed to rebuild $@; fi)
 endif
