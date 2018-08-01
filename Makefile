@@ -2,8 +2,7 @@ IMAGES=$(shell find * -type f -name Dockerfile -printf '%h\n' | sed 's@/@\\:@g')
 REGISTRY?=r.philpep.org
 ALPINE_DEPENDS=$(shell find * -name Dockerfile | xargs grep -l '^FROM $(REGISTRY)/alpine:3.8' | xargs dirname | sed 's@/@:@g')
 DEBIAN_DEPENDS=$(shell find * -name Dockerfile | xargs grep -l '^FROM $(REGISTRY)/debian:stretch-slim' | xargs dirname | sed 's@/@:@g')
-MAKEFLAGS += -rR --jobs=4
-TAG?=
+MAKEFLAGS += -rR
 
 .PHONY: all clean push pull run exec check $(IMAGES) $(addprefix $(REGISTRY)/,$(IMAGES))
 
