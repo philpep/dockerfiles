@@ -2,6 +2,7 @@ IMAGES=$(shell find * -type f -name Dockerfile -printf '%h\n' | sed 's@/@\\:@g')
 REGISTRY?=r.philpep.org
 ALPINE_DEPENDS=$(shell find * -name Dockerfile | xargs grep -l '^FROM $(REGISTRY)/alpine:3.8' | xargs dirname | sed 's@/@:@g')
 DEBIAN_DEPENDS=$(shell find * -name Dockerfile | xargs grep -l '^FROM $(REGISTRY)/debian:stretch-slim' | xargs dirname | sed 's@/@:@g')
+PHP_FPM_DEPENDS=$(shell find * -name Dockerfile | xargs grep -l '^FROM $(REGISTRY)/php-fpm' | xargs dirname | sed 's@/@:@g')
 MAKEFLAGS += -rR
 
 .PHONY: all clean push pull run exec check checkrebuild $(IMAGES) $(addprefix $(REGISTRY)/,$(IMAGES))
@@ -21,6 +22,8 @@ alpine/3.8/rootfs.tar.xz:
 $(addprefix $(REGISTRY)/,$(ALPINE_DEPENDS)): $(REGISTRY)/alpine\:3.8
 
 $(addprefix $(REGISTRY)/,$(DEBIAN_DEPENDS)): $(REGISTRY)/debian\:stretch-slim
+
+$(addprefix $(REGISTRY)/,$(PHP_FPM_DEPENDS)): $(REGISTRY)/php-fpm
 
 $(IMAGES): %: $(REGISTRY)/%
 ifeq (push,$(filter push,$(MAKECMDGOALS)))
