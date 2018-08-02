@@ -12,6 +12,8 @@ RUN apk add --no-cache \
     git \
     vim \
     python3 \
+    openssh-client \
+    curl \
     mercurial
 RUN apk add --no-cache py2-pip && \
     pip install --no-cache hg-evolve==8.0.1 && \
