@@ -34,6 +34,8 @@ RUN apk add --no-cache \
     php7-apcu \
     php7 \
     php7-phar \
+    php7-simplexml \
+    php7-xml \
 # need dovecot for roundcube / postfixadmin
     dovecot \
     php7-fpm
