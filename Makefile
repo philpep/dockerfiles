@@ -1,16 +1,17 @@
-IMAGES=$(shell find * -type f -name Dockerfile -printf '%h\n' | sed 's@/@\\:@g')
+DOCKERFILES=$(shell find * -type f -name Dockerfile)
+NAMES=$(subst /,\:,$(subst /Dockerfile,,$(DOCKERFILES)))
 REGISTRY?=r.philpep.org
-ALPINE_DEPENDS=$(shell find * -name Dockerfile | xargs grep -l '^FROM $(REGISTRY)/alpine:3.8' | xargs dirname | sed 's@/@:@g')
-DEBIAN_DEPENDS=$(shell find * -name Dockerfile | xargs grep -l '^FROM $(REGISTRY)/debian:stretch-slim' | xargs dirname | sed 's@/@:@g')
-PHP_FPM_DEPENDS=$(shell find * -name Dockerfile | xargs grep -l '^FROM $(REGISTRY)/php-fpm' | xargs dirname | sed 's@/@:@g')
+IMAGES=$(addprefix $(REGISTRY)/,$(NAMES))
+DEPENDS=.depends.mk
 MAKEFLAGS += -rR
+BUILDOPTS?=
 
-.PHONY: all clean push pull run exec check checkrebuild $(IMAGES) $(addprefix $(REGISTRY)/,$(IMAGES))
+.PHONY: all clean push pull run exec check checkrebuild $(NAMES) $(IMAGES)
 
-all: $(IMAGES)
+all: $(NAMES)
 
 clean:
-	rm -f alpine/3.8/rootfs.tar.xz
+	rm -f alpine/3.8/rootfs.tar.xz $(DEPENDS)
 
 $(REGISTRY)/alpine\:3.8: alpine/3.8/rootfs.tar.xz
 
@@ -19,35 +20,33 @@ alpine/3.8/rootfs.tar.xz:
 	docker run --rm $(REGISTRY)/alpine:builder -r v3.8 -m http://dl-cdn.alpinelinux.org/alpine -b -t UTC \
 		-p alpine-baselayout,busybox,alpine-keys,apk-tools,libc-utils -s > $@
 
-$(addprefix $(REGISTRY)/,$(ALPINE_DEPENDS)): $(REGISTRY)/alpine\:3.8
+$(DEPENDS): $(DOCKERFILES)
+	grep '^FROM $(REGISTRY)/' $(DOCKERFILES) | \
+		awk -F '/Dockerfile:FROM ' '{ print "$(REGISTRY)/" $$1 " " $$2 }' | \
+		sed 's@:@\\:@g' | sed 's@ @: @g' > $@
 
-$(addprefix $(REGISTRY)/,$(DEBIAN_DEPENDS)): $(REGISTRY)/debian\:stretch-slim
+sinclude $(DEPENDS)
 
-$(addprefix $(REGISTRY)/,$(PHP_FPM_DEPENDS)): $(REGISTRY)/php-fpm
-
-$(IMAGES): %: $(REGISTRY)/%
+$(NAMES): %: $(REGISTRY)/%
 ifeq (push,$(filter push,$(MAKECMDGOALS)))
-	docker push $(REGISTRY)/$@
+	echo docker push $<
 endif
 ifeq (run,$(filter run,$(MAKECMDGOALS)))
-	docker run --rm -it $(REGISTRY)/$@
+	docker run --rm -it $<
 endif
 ifeq (exec,$(filter exec,$(MAKECMDGOALS)))
-	docker run --entrypoint sh --rm -it $(REGISTRY)/$@
+	docker run --entrypoint sh --rm -it $<
 endif
 ifeq (check,$(filter check,$(MAKECMDGOALS)))
-	docker run --entrypoint sh -u root -v $(shell pwd)/check_update.sh:/check_update.sh --rm $(REGISTRY)/$@ /check_update.sh
+	./check_update.sh $<
 endif
 
-$(addprefix $(REGISTRY)/,$(IMAGES)): %:
+$(IMAGES): %:
 ifeq (pull,$(filter pull,$(MAKECMDGOALS)))
 	docker pull $@
 else
-	docker build -t $@ $(subst :,/,$(subst $(REGISTRY)/,,$@))
+	docker build $(BUILDOPTS) -t $@ $(subst :,/,$(subst $(REGISTRY)/,,$@))
 endif
 ifeq (checkrebuild,$(filter checkrebuild,$(MAKECMDGOALS)))
-	@(if docker run --entrypoint sh -u root -v $(shell pwd)/check_update.sh:/check_update.sh --rm $@ /check_update.sh | grep 'upgradable from'; then \
-		echo $@ need rebuild; docker build --no-cache -t $@ $(subst :,/,$(subst $(REGISTRY)/,,$@)); else echo $@ is up-to-date; fi)
-	@(if docker run --entrypoint sh -u root -v $(shell pwd)/check_update.sh:/check_update.sh --rm $@ /check_update.sh | grep 'upgradable from'; then \
-		echo failed to rebuild $@; fi)
+	./check_update.sh $@ || (BUILDOPTS=--no-cache $(MAKE) $@ && ./check_update.sh $@)
 endif
