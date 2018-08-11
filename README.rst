@@ -4,7 +4,7 @@ dockerfiles
 
 This is a collection of dockerfiles which are running in my kubernetes_ cluster.
 
-.. code-block:: shell
+.. code-block::
 
    $ make help
    A smart Makefile for your dockerfiles
