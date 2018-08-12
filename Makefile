@@ -39,8 +39,8 @@ alpine/3.8/rootfs.tar.xz:
 
 $(DEPENDS): $(DOCKERFILES)
 	grep '^FROM $(REGISTRY)/' $(DOCKERFILES) | \
-		awk -F '/Dockerfile:FROM ' '{ print "$(REGISTRY)/" $$1 " " $$2 }' | \
-		sed 's@:@\\:@g' | sed 's@ @: @g' > $@
+		awk -F '/Dockerfile:FROM $(REGISTRY)/' '{ print $$1 " " $$2 }' | \
+		sed 's@[:/]@\\:@g' | awk '{ print "$(REGISTRY)/" $$1 ": " "$(REGISTRY)/" $$2 }' > $@
 
 sinclude $(DEPENDS)
 
