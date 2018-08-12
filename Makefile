@@ -46,7 +46,7 @@ sinclude $(DEPENDS)
 
 $(NAMES): %: $(REGISTRY)/%
 ifeq (push,$(filter push,$(MAKECMDGOALS)))
-	echo docker push $<
+	docker push $<
 endif
 ifeq (run,$(filter run,$(MAKECMDGOALS)))
 	docker run --rm -it $<
