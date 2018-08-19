@@ -4,7 +4,6 @@ REGISTRY?=r.philpep.org
 IMAGES=$(addprefix $(REGISTRY)/,$(NAMES))
 DEPENDS=.depends.mk
 MAKEFLAGS += -rR
-BUILDOPTS?=
 
 .PHONY: all clean push pull run exec check checkrebuild $(NAMES) $(IMAGES)
 
@@ -62,8 +61,8 @@ $(IMAGES): %:
 ifeq (pull,$(filter pull,$(MAKECMDGOALS)))
 	docker pull $@
 else
-	docker build $(BUILDOPTS) -t $@ $(subst :,/,$(subst $(REGISTRY)/,,$@))
+	docker build -t $@ $(subst :,/,$(subst $(REGISTRY)/,,$@))
 endif
 ifeq (checkrebuild,$(filter checkrebuild,$(MAKECMDGOALS)))
-	./check_update.sh $@ || (BUILDOPTS=--no-cache $(MAKE) $@ && ./check_update.sh $@)
+	./check_update.sh $@ || (docker build --no-cache -t $@ $(subst :,/,$(subst $(REGISTRY)/,,$@)) && ./check_update.sh $@)
 endif
