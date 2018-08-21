@@ -36,8 +36,6 @@ RUN apk add --no-cache \
     php7-phar \
     php7-simplexml \
     php7-xml \
-# need dovecot for roundcube / postfixadmin
-    dovecot \
     php7-fpm
 RUN sed -i "s@;error_log =.*@error_log = /dev/stderr@g" /etc/php7/php-fpm.conf
 COPY www.conf /etc/php7/php-fpm.d/www.conf
