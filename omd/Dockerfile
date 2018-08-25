@@ -1,7 +1,5 @@
 FROM r.philpep.org/debian:stretch-slim
 RUN apt-get -y update && apt-get -t stretch-backports -y install check-mk-raw-1.4.0p33
-COPY flock-nfs.patch /tmp/flock-nfs.patch
-RUN cd /opt/omd/versions/1.4.0p33.cre && patch -p1 < /tmp/flock-nfs.patch && rm /tmp/flock-nfs.patch
 RUN apt-get -y update && apt-get -y install cron openssh-client vim-nox
 RUN omd create --no-autostart philpep || true
 RUN omd config philpep set DEFAULT_GUI check_mk
