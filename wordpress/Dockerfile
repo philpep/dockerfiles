@@ -1,16 +1,22 @@
 FROM r.philpep.org/php-fpm
-ARG SRC=wordpress-4.9.7.tar.gz
-ARG SHA=8514274c5d5b27f8d7c5fb39947d8afc947396940a8a4daffd4fb56c8bbf3b69
+ARG VERSION=4.9.8
+ARG DIST=wordpress-$VERSION.tar.gz
+ARG URL=https://wordpress.org/$DIST
+ARG SHA512=052b4436d8b5e5970ff6827b9f08f7f321301d187a9655e82ee1358f0012cc84a007f4ae04fecc4aaeb10a9e7eb9de7bc6643e6f0db57bb5983e7647e4230c41
 USER root
-RUN wget -O $SRC https://wordpress.org/$SRC && \
-    echo "$SHA  $SRC" | sha256sum -c - && \
-    tar -C /data -xvzf $SRC && \
-    chown -R root:root /data/wordpress && \
-    rm -f $SRC
-ARG CLI_VERSION=1.5.1
-ARG CLI_SHA=8dd68c98c6fa00e1acc5e036f9393c8b052937045b5232e4aa0eb4f15773908eae48760607bc853a4f951bd5ba69e5050337e5d9dcfa48df87a12cebb1de3432
-RUN wget -O /usr/local/bin/wp https://github.com/wp-cli/wp-cli/releases/download/v$CLI_VERSION/wp-cli-$CLI_VERSION.phar && \
-    echo "$CLI_SHA  /usr/local/bin/wp" | sha512sum -c - && \
+RUN mkdir -p /data/wordpress
+RUN wget -O $DIST $URL && \
+    echo "$SHA512  $DIST" | sha512sum -c - && \
+    tar -C /data/wordpress --strip-components=1 -xvzf $DIST && \
+    rm -f $DIST && \
+    chown -R root:root /data
+
+ARG VERSION=2.0.1
+ARG DIST=wp-cli-$VERSION.phar
+ARG URL=https://github.com/wp-cli/wp-cli/releases/download/v$VERSION/$DIST
+ARG SHA512=21b9c1d65993f88bf81cc73c0a832532cc424bea8c15563a77af1905d0dc4714f2af679dfadedd3b683f3968902b4b6be4c6cf94285da9f5582b30c1dac5397f
+RUN wget -O /usr/local/bin/wp $URL && \
+    echo "$SHA512  /usr/local/bin/wp" | sha512sum -c - && \
     chmod +x /usr/local/bin/wp
 ENV WP_CLI_CONFIG_PATH=/etc/wp-cli.yml
 RUN echo "path: /data/wordpress" > $WP_CLI_CONFIG_PATH
