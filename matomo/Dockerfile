@@ -6,6 +6,6 @@ RUN mkdir -p /data/matomo
 RUN wget -O $SRC https://builds.matomo.org/$SRC && \
     echo "$SHA  $SRC" | sha256sum -c - && \
     tar -C /data/matomo -xvzf $SRC && \
-    chown -R root:root /data/matomo && \
+    chown -R nobody:nobody /data/matomo && \
     rm -f $SRC
 USER nobody

@@ -11,6 +11,6 @@ RUN wget -O $DIST $URL && \
     echo "$SHA512  $DIST" | sha512sum -c - && \
     tar -C /data/roundcube --strip-components=1 -xvzf $DIST && \
     rm -f $DIST && \
-    chown -R root:root /data
+    chown -R nobody:nobody /data/roundcube
 COPY index.html rc.png robots.txt /data/
 USER nobody

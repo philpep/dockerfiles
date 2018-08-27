@@ -9,7 +9,7 @@ RUN wget -O $DIST $URL && \
     echo "$SHA512  $DIST" | sha512sum -c - && \
     tar -C /data/wordpress --strip-components=1 -xvzf $DIST && \
     rm -f $DIST && \
-    chown -R root:root /data
+    chown -R nobody:nobody /data/wordpress
 
 ARG VERSION=2.0.1
 ARG DIST=wp-cli-$VERSION.phar
