@@ -16,7 +16,7 @@ RUN apk add --no-cache \
     curl \
     mercurial
 RUN apk add --no-cache py2-pip && \
-    pip install --no-cache-dir --disable-pip-version-check hg-evolve==8.1.1 && \
+    pip install --no-cache-dir --disable-pip-version-check hg-evolve==8.1.2 && \
     apk del py2-pip
 RUN apk add --no-cache tzdata && \
     cp /usr/share/zoneinfo/Europe/Paris /etc/localtime && \
