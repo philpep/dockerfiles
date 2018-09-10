@@ -1,6 +1,6 @@
 FROM r.philpep.org/alpine:3.8
 RUN apk add --no-cache mercurial uwsgi uwsgi-python py2-pip && \
-	pip install --no-cache-dir --disable-pip-version-check hg-evolve==8.1.2 && \
+	pip install --no-cache-dir --disable-pip-version-check hg-evolve==8.2.0 && \
 	apk del py2-pip
 COPY uwsgi.ini /etc/uwsgi/uwsgi.ini
 COPY hgweb.wsgi /etc/mercurial/hgweb.wsgi
