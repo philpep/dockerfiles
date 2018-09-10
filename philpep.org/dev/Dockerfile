@@ -4,7 +4,7 @@ RUN wget https://github.com/philpep/philpep.org/archive/dev.zip && \
     unzip dev.zip && \
     rm -f dev.zip
 WORKDIR philpep.org-dev
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir --disable-pip-version-check -r requirements.txt
 RUN hyde gen
 
 FROM r.philpep.org/nginx
