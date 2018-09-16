@@ -1,0 +1,20 @@
+--- client/ssh/shell.py.orig	2018-09-16 23:36:02.148112375 +0200
++++ client/ssh/shell.py	2018-09-16 23:36:23.512135731 +0200
+@@ -125,8 +125,6 @@
+             options.append('PasswordAuthentication=yes')
+         else:
+             options.append('PasswordAuthentication=no')
+-        if self.opts.get('_ssh_version', (0,)) > (4, 9):
+-            options.append('GSSAPIAuthentication=no')
+         options.append('ConnectTimeout={0}'.format(self.timeout))
+         if self.opts.get('ignore_host_keys'):
+             options.append('StrictHostKeyChecking=no')
+@@ -160,8 +158,6 @@
+         options = ['ControlMaster=auto',
+                    'StrictHostKeyChecking=no',
+                    ]
+-        if self.opts['_ssh_version'] > (4, 9):
+-            options.append('GSSAPIAuthentication=no')
+         options.append('ConnectTimeout={0}'.format(self.timeout))
+         if self.opts.get('ignore_host_keys'):
+             options.append('StrictHostKeyChecking=no')
