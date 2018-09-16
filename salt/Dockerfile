@@ -3,6 +3,9 @@ RUN apk add --no-cache salt-master
 RUN adduser -D salt
 RUN mkdir -p /var/cache/salt /var/run/salt
 RUN chown -R salt:salt /etc/salt /var/cache/salt /var/run/salt /var/log/salt
+COPY issue47006.patch /tmp/
+RUN cd //usr/lib/python3.6/site-packages/salt && \
+    patch -p0 < /tmp/issue47006.patch
 USER salt
 WORKDIR /home/salt
 EXPOSE 4505 4506
