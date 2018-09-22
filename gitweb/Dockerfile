@@ -1,4 +1,5 @@
-FROM r.philpep.org/alpine:3.8
+ARG REGISTRY
+FROM $REGISTRY/alpine:3.8
 RUN apk add --no-cache git fcgiwrap spawn-fcgi cgit
 ADD cgitrc /etc/cgitrc
 RUN mkdir /repos

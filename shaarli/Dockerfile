@@ -1,4 +1,5 @@
-FROM r.philpep.org/php-fpm
+ARG REGISTRY
+FROM $REGISTRY/php-fpm
 ARG SRC=shaarli-v0.10.0-full.tar.gz
 ARG SHA=e6de21042f3f277f4648293fa9db3740dbc6815640126e914f3a3cf95d44f148
 USER root

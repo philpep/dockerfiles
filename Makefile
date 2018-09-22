@@ -36,9 +36,10 @@ alpine/3.8/rootfs.tar.xz:
 	docker run --rm $(REGISTRY)/alpine:builder -r v3.8 -m http://dl-cdn.alpinelinux.org/alpine -b -t UTC \
 		-p alpine-baselayout,busybox,alpine-keys,apk-tools,libc-utils -s > $@
 
+.PHONY: $(DEPENDS)
 $(DEPENDS): $(DOCKERFILES)
-	grep '^FROM $(REGISTRY)/' $(DOCKERFILES) | \
-		awk -F '/Dockerfile:FROM $(REGISTRY)/' '{ print $$1 " " $$2 }' | \
+	grep '^FROM \$$REGISTRY/' $(DOCKERFILES) | \
+		awk -F '/Dockerfile:FROM \\$$REGISTRY/' '{ print $$1 " " $$2 }' | \
 		sed 's@[:/]@\\:@g' | awk '{ print "$(REGISTRY)/" $$1 ": " "$(REGISTRY)/" $$2 }' > $@
 
 sinclude $(DEPENDS)
@@ -61,8 +62,8 @@ $(IMAGES): %:
 ifeq (pull,$(filter pull,$(MAKECMDGOALS)))
 	docker pull $@
 else
-	docker build -t $@ $(subst :,/,$(subst $(REGISTRY)/,,$@))
+	docker build --build-arg REGISTRY=$(REGISTRY) -t $@ $(subst :,/,$(subst $(REGISTRY)/,,$@))
 endif
 ifeq (checkrebuild,$(filter checkrebuild,$(MAKECMDGOALS)))
-	./check_update.sh $@ || (docker build --no-cache -t $@ $(subst :,/,$(subst $(REGISTRY)/,,$@)) && ./check_update.sh $@)
+	./check_update.sh $@ || (docker build --build-arg REGISTRY=$(REGISTRY) --no-cache -t $@ $(subst :,/,$(subst $(REGISTRY)/,,$@)) && ./check_update.sh $@)
 endif

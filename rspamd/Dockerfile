@@ -1,4 +1,5 @@
-FROM r.philpep.org/alpine:3.8
+ARG REGISTRY
+FROM $REGISTRY/alpine:3.8
 RUN apk add --no-cache rspamd
 RUN ln -sf /dev/stdout /var/log/rspamd/rspamd.log
 USER rspamd

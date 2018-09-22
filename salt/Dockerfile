@@ -1,4 +1,5 @@
-FROM r.philpep.org/alpine:3.8
+ARG REGISTRY
+FROM $REGISTRY/alpine:3.8
 RUN apk add --no-cache salt-master salt-ssh openssh-client
 RUN adduser -D salt
 RUN mkdir -p /var/cache/salt /var/run/salt

@@ -1,4 +1,5 @@
-FROM r.philpep.org/debian:stretch-slim
+ARG REGISTRY
+FROM $REGISTRY/debian:stretch-slim
 RUN apt-get -y update && apt-get -t stretch-backports -y install check-mk-raw-1.5.0p3
 RUN apt-get -y update && apt-get -y install cron openssh-client vim-nox
 RUN omd create --no-autostart philpep || true

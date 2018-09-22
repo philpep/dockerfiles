@@ -1,4 +1,5 @@
-FROM r.philpep.org/alpine:3.8
+ARG REGISTRY
+FROM $REGISTRY/alpine:3.8
 RUN apk add --no-cache mercurial uwsgi uwsgi-python py2-pip && \
 	pip install --no-cache-dir --disable-pip-version-check hg-evolve==8.2.0 && \
 	apk del py2-pip

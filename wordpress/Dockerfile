@@ -1,4 +1,5 @@
-FROM r.philpep.org/php-fpm
+ARG REGISTRY
+FROM $REGISTRY/php-fpm
 ARG VERSION=4.9.8
 ARG DIST=wordpress-$VERSION.tar.gz
 ARG URL=https://wordpress.org/$DIST

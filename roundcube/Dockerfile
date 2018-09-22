@@ -1,4 +1,5 @@
-FROM r.philpep.org/php-fpm
+ARG REGISTRY
+FROM $REGISTRY/php-fpm
 ARG VERSION=1.3.7
 ARG DIST=roundcubemail-$VERSION-complete.tar.gz
 ARG URL=https://github.com/roundcube/roundcubemail/releases/download/$VERSION/$DIST

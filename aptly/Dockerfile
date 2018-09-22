@@ -1,4 +1,5 @@
-FROM r.philpep.org/debian:stretch-slim
+ARG REGISTRY
+FROM $REGISTRY/debian:stretch-slim
 RUN apt-get -y update && \
 	apt-get -y -t stretch-backports install aptly && \
 	apt-get -y install inoticoming
