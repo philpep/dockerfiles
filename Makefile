@@ -1,6 +1,6 @@
 DOCKERFILES=$(shell find * -type f -name Dockerfile)
 NAMES=$(subst /,\:,$(subst /Dockerfile,,$(DOCKERFILES)))
-REGISTRY?=r.philpep.org
+REGISTRY?=r.in.philpep.org
 IMAGES=$(addprefix $(REGISTRY)/,$(NAMES))
 DEPENDS=.depends.mk
 MAKEFLAGS += -rR
