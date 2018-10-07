@@ -5,6 +5,8 @@ if test -f /.dockerenv; then
     elif test -x /usr/bin/apt-get; then
         apt-get update > /dev/null
         apt list --upgradable 2>/dev/null | grep 'upgradable from' && exit 1
+    elif test -x /usr/bin/yum; then
+        yum check-update || exit 1
     fi
     exit 0
 fi
