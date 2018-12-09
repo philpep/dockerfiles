@@ -1,5 +1,2 @@
 [extensions]
 evolve.serveronly=
-
-[experimental]
-obshashrange=true
