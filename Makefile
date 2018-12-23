@@ -1,7 +1,7 @@
 DOCKERFILES=$(shell find * -type f -name Dockerfile)
 NAMES=$(subst /,\:,$(subst /Dockerfile,,$(DOCKERFILES)))
 REGISTRY?=r.in.philpep.org
-IMAGES=$(addprefix $(REGISTRY)/,$(NAMES))
+IMAGES=$(addprefix $(subst :,\:,$(REGISTRY))/,$(NAMES))
 DEPENDS=.depends.mk
 MAKEFLAGS += -rR
 
@@ -29,7 +29,7 @@ help:
 clean:
 	rm -f alpine/3.8/rootfs.tar.xz $(DEPENDS)
 
-$(REGISTRY)/alpine\:3.8: alpine/3.8/rootfs.tar.xz
+$(subst :,\:,$(REGISTRY))/alpine\:3.8: alpine/3.8/rootfs.tar.xz
 
 alpine/3.8/rootfs.tar.xz:
 	$(MAKE) $(REGISTRY)/alpine:builder
@@ -40,7 +40,7 @@ alpine/3.8/rootfs.tar.xz:
 $(DEPENDS): $(DOCKERFILES)
 	grep '^FROM \$$REGISTRY/' $(DOCKERFILES) | \
 		awk -F '/Dockerfile:FROM \\$$REGISTRY/' '{ print $$1 " " $$2 }' | \
-		sed 's@[:/]@\\:@g' | awk '{ print "$(REGISTRY)/" $$1 ": " "$(REGISTRY)/" $$2 }' > $@
+		sed 's@[:/]@\\:@g' | awk '{ print "$(subst :,\\:,$(REGISTRY))/" $$1 ": " "$(subst :,\\:,$(REGISTRY))/" $$2 }' > $@
 
 sinclude $(DEPENDS)
 
