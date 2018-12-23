@@ -1,0 +1,5 @@
+user = @@MAILSERVER_DB_USER@@
+password = @@MAILSERVER_DB_PASSWORD@@
+hosts = @@MAILSERVER_DB_HOST@@
+dbname = @@MAILSERVER_DB_NAME@@
+query = SELECT relay FROM mail_transport WHERE dest='%s'
