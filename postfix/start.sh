@@ -1,9 +1,9 @@
 #!/usr/bin/dumb-init /bin/sh
 set -e
-if [ ! -s /etc/ssl/postfix/server.key ] || [ ! -s /etc/ssl/postfix/server.pem ]; then
+if [ ! -s /etc/ssl/postfix/tls.key ] || [ ! -s /etc/ssl/postfix/tls.crt ]; then
     echo "Generating self-signed certificate"
-    openssl req -x509 -sha256 -nodes -newkey rsa:4096 -keyout /etc/ssl/postfix/server.key -out /etc/ssl/postfix/server.crt -days 365 -subj '/CN=localhost'
-    chmod 600 /etc/ssl/postfix/server.key
+    openssl req -x509 -sha256 -nodes -newkey rsa:4096 -keyout /etc/ssl/postfix/tls.key -out /etc/ssl/postfix/tls.crt -days 365 -subj '/CN=localhost'
+    chmod 600 /etc/ssl/postfix/tls.key
 fi
 if [ ! -s /etc/ssl/postfix/dh1024.pem ]; then
     echo "Generating dh1024.pem"

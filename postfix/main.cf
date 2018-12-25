@@ -36,8 +36,8 @@ smtpd_sender_restrictions =
   reject_unknown_sender_domain,
   permit
 smtpd_tls_security_level = may
-smtpd_tls_cert_file = /etc/ssl/postfix/server.crt
-smtpd_tls_key_file = /etc/ssl/postfix/server.key
+smtpd_tls_cert_file = /etc/ssl/postfix/tls.crt
+smtpd_tls_key_file = /etc/ssl/postfix/tls.key
 smtpd_tls_loglevel = 1
 smtpd_tls_mandatory_protocols = !SSLv2,!SSLv3
 smtpd_tls_dh1024_param_file = /etc/ssl/postfix/dh1024.pem
