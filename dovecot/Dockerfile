@@ -6,6 +6,8 @@ RUN apk add --no-cache \
     dovecot-pigeonhole-plugin \
     rspamd-client \
     dumb-init
+RUN mv /etc/ssl/dovecot/server.key /etc/ssl/dovecot/tls.key && \
+    mv /etc/ssl/dovecot/server.pem /etc/ssl/dovecot/tls.crt
 RUN addgroup -g 425 -S vmail
 RUN adduser -h /var/lib/vmail -S -D -H -u 425 -G vmail vmail
 RUN install -o vmail -g vmail -d /var/lib/vmail
