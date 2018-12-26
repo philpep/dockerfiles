@@ -19,7 +19,7 @@ ENV MAILSERVER_DB_NAME=postgres
 ENV MAILSERVER_HOSTNAME=smtp.example.com
 ENV MAILSERVER_MASQUERADE_DOMAINS=example.com
 COPY master.cf main.cf pgsql-transport.cf pgsql-domain.cf \
-     pgsql-mailbox.cf pgsql-alias.cf /etc/postfix/
+     pgsql-mailbox.cf pgsql-alias.cf smtp_header_checks /etc/postfix/
 RUN chown root:root /var/spool/postfix /var/spool/postfix/pid
 COPY rsyslog.conf /etc/rsyslog.conf
 COPY start.sh /
