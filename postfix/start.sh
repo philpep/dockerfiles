@@ -5,13 +5,13 @@ if [ ! -s /etc/ssl/postfix/tls.key ] || [ ! -s /etc/ssl/postfix/tls.crt ]; then
     openssl req -x509 -sha256 -nodes -newkey rsa:4096 -keyout /etc/ssl/postfix/tls.key -out /etc/ssl/postfix/tls.crt -days 365 -subj '/CN=localhost'
     chmod 600 /etc/ssl/postfix/tls.key
 fi
-if [ ! -s /etc/ssl/postfix/dh1024.pem ]; then
+if [ ! -s /etc/ssl/dh1024.pem ]; then
     echo "Generating dh1024.pem"
-    openssl dhparam -out /etc/ssl/postfix/dh1024.pem 1024
+    openssl dhparam -out /etc/ssl/dh1024.pem 1024
 fi
-if [ ! -s /etc/ssl/postfix/dh512.pem ]; then
+if [ ! -s /etc/ssl/dh512.pem ]; then
     echo "Generating dh512.pem"
-    openssl dhparam -out /etc/ssl/postfix/dh512.pem 512
+    openssl dhparam -out /etc/ssl/dh512.pem 512
 fi
 for fname in /etc/postfix/pgsql-transport.cf /etc/postfix/pgsql-domain.cf /etc/postfix/pgsql-mailbox.cf /etc/postfix/pgsql-alias.cf; do
     sed -i "s/@@MAILSERVER_DB_USER@@/$MAILSERVER_DB_USER/g" $fname
