@@ -13,6 +13,11 @@ RUN adduser -h /var/lib/vmail -S -D -H -u 425 -G vmail vmail
 RUN install -o vmail -g vmail -d /var/lib/vmail
 COPY dovecot.conf dovecot-dict-quota.conf dovecot-sql.conf rspamd.sieve /etc/dovecot/
 RUN cd /etc/dovecot && sievec rspamd.sieve
+COPY report-spam.sieve report-ham.sieve learn-spam.sh learn-ham.sh /usr/lib/dovecot/sieve/
+RUN cd /usr/lib/dovecot/sieve && \
+    chmod +x learn-spam.sh learn-ham.sh && \
+    sievec report-spam.sieve && \
+    sievec report-ham.sieve
 ENV MAILSERVER_DB_USER=postgres
 ENV MAILSERVER_DB_PASSWORD=postgres
 ENV MAILSERVER_DB_HOST=localhost
