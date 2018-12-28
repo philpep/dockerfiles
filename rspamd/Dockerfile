@@ -5,6 +5,7 @@ RUN apk add --no-cache \
     rspamd-controller \
     rspamd-proxy
 RUN echo -e 'filename = "/dev/stdout";' > /etc/rspamd/local.d/logging.inc
+RUN echo -e 'local_addrs = [];' > /etc/rspamd/override.d/options.inc
 USER rspamd
 WORKDIR /var/lib/rspamd
 CMD ["rspamd", "--no-fork", "--pid", "/dev/null"]
