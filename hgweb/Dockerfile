@@ -1,6 +1,7 @@
 ARG REGISTRY
 FROM $REGISTRY/alpine:3.8
-RUN apk add --no-cache mercurial uwsgi uwsgi-python py2-pip && \
+RUN apk add --no-cache uwsgi uwsgi-python py2-pip && \
+    apk add --no-cache mercurial --repository http://dl-cdn.alpinelinux.org/alpine/edge/main && \
 	pip install --no-cache-dir --disable-pip-version-check hg-evolve==8.3.3 && \
 	apk del py2-pip
 COPY uwsgi.ini /etc/uwsgi/uwsgi.ini
