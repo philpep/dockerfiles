@@ -6,4 +6,6 @@ RUN apk add --no-cache \
     curl \
     httpie \
     ca-certificates \
+    postgresql-client \
+    mysql-client \
     jq
