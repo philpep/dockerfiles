@@ -1,5 +1,5 @@
 ARG REGISTRY
-FROM $REGISTRY/alpine:3.8 as builder
+FROM $REGISTRY/alpine:3.9 as builder
 RUN apk add --no-cache py2-pip
 RUN wget https://github.com/philpep/philpep.org/archive/master.zip && \
     unzip master.zip && \

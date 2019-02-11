@@ -1,5 +1,5 @@
 ARG REGISTRY
-FROM $REGISTRY/alpine:3.8
+FROM $REGISTRY/alpine:3.9
 RUN apk add --no-cache uwsgi uwsgi-python && \
     apk add --no-cache mercurial --repository http://dl-cdn.alpinelinux.org/alpine/edge/main
 COPY uwsgi.ini /etc/uwsgi/uwsgi.ini
