@@ -1,5 +1,5 @@
 ARG REGISTRY
-FROM $REGISTRY/alpine:3.8
+FROM $REGISTRY/alpine:3.9
 RUN apk add --no-cache bind
 RUN touch /etc/bind/named.conf
 RUN chown -R named:named /etc/bind
