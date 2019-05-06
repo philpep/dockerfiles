@@ -1,11 +1,14 @@
 ARG REGISTRY
 FROM $REGISTRY/alpine:3.9
-RUN apk add --no-cache uwsgi uwsgi-python && \
-    apk add --no-cache mercurial --repository http://dl-cdn.alpinelinux.org/alpine/edge/main
-COPY uwsgi.ini /etc/uwsgi/uwsgi.ini
-COPY hgweb.wsgi /etc/mercurial/hgweb.wsgi
-COPY hgweb.config /etc/mercurial/hgweb.config
+RUN apk add --no-cache python2 py2-setuptools py2-pip python2-dev g++ && \
+    python -m pip install --disable-pip-version-check --no-cache-dir gunicorn eventlet pygments mercurial==4.9.1 hg-evolve==8.5.1 && \
+	apk del py2-pip python2-dev g++
+COPY hgweb.py hgweb.config gunicorn.conf /etc/mercurial/
 RUN mkdir /repos
-USER uwsgi
+RUN addgroup -g 101 -S hgweb
+RUN adduser -h /var/lib/hgweb -S -D -H -u 100 -G hgweb hgweb
+RUN install -o hgweb -g hgweb -d /var/run/hgweb
+WORKDIR /etc/mercurial
+USER hgweb
 EXPOSE 9000/tcp
-CMD ["uwsgi", "-c", "/etc/uwsgi/uwsgi.ini"]
+CMD ["gunicorn", "--config", "/etc/mercurial/gunicorn.conf", "hgweb:application"]
