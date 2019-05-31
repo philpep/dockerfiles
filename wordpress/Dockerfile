@@ -1,5 +1,10 @@
 ARG REGISTRY
 FROM $REGISTRY/php-fpm
+USER root
+# python3 required for check_wordpress script
+RUN apk add --no-cache python3
+COPY check_wordpress /usr/local/bin/
+RUN chmod +x /usr/local/bin/check_wordpress
 ARG VERSION=5.2.1
 ARG DIST=wordpress-$VERSION.tar.gz
 ARG URL=https://wordpress.org/$DIST

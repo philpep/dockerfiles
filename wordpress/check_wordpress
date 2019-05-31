@@ -1,0 +1,72 @@
+#!/usr/bin/env python3
+
+import argparse
+import collections
+import json
+import subprocess
+import sys
+
+Result = collections.namedtuple('Result', ['rc', 'stdout', 'stderr'])
+
+
+def run_wp(*args):
+    cmd = ['wp', '--no-color'] + list(args)
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = p.communicate()
+    return Result(p.returncode, stdout, stderr)
+
+
+def wp(*args):
+    result = run_wp(*args)
+    if result.rc != 0:
+        raise RuntimeError(result)
+    return result.stdout.decode().strip()
+
+
+def check_wordpress():
+    checks = []
+    level = 0
+    version = wp('core', 'version')
+    data = wp('core', 'check-update', '--json')
+    # wp output nothing if no updates are availables
+    if data:
+        for update in json.loads(data):
+            checks.append('core {} -> {}'.format(
+                version, update['version']))
+            level = 1
+    else:
+        checks.append('core {}'.format(version))
+    for wp_type in ('plugin', 'theme'):
+        data = wp(wp_type, 'update', '--all', '--dry-run', '--json')
+        if data:
+            for update in json.loads(data):
+                if update['status'] == 'inactive':
+                    continue
+                checks.append('{} {} {} -> {}'.format(
+                    wp_type, update['name'], update['version'],
+                    update['update_version']))
+                level = 1
+    for wp_type in ('core', 'plugin'):
+        cmd = [wp_type, 'verify-checksums']
+        if wp_type == 'plugin':
+            cmd.append('--all')
+        result = run_wp(*cmd)
+        if result.rc == 0:
+            checks.append('{} checksum ok'.format(wp_type))
+        elif result.rc == 1:
+            checks.append('{} checksum failed'.format(wp_type))
+            level = 2
+        else:
+            raise RuntimeError(result)
+    level_map = {0: 'OK', 1: 'WARNING', 2: 'CRITICAL'}
+    name = wp('option', 'get', 'siteurl')
+    print('WORDPRESS {} {} - {}'.format(
+        name, level_map[level],
+        ', '.join(checks)))
+    return level
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(sys.argv[0])
+    args = parser.parse_args()
+    sys.exit(check_wordpress())
