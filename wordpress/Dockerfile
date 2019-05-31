@@ -1,22 +1,23 @@
 ARG REGISTRY
 FROM $REGISTRY/php-fpm
-ARG VERSION=4.9.8
+ARG VERSION=5.2.1
 ARG DIST=wordpress-$VERSION.tar.gz
 ARG URL=https://wordpress.org/$DIST
-ARG SHA512=052b4436d8b5e5970ff6827b9f08f7f321301d187a9655e82ee1358f0012cc84a007f4ae04fecc4aaeb10a9e7eb9de7bc6643e6f0db57bb5983e7647e4230c41
-USER root
+ARG SHA512=b49368ba7a3f0cf101b2ad2c78d609050f371a4c7f6dca7d5966cc167ae20ca78df9a3144e1b91c4044d0a9a12163911d66c8faedc9c4a1e2978d2b54ef54855
 RUN mkdir -p /data/wordpress
 RUN wget -O $DIST $URL && \
+    echo "expected SHA512=$(sha512sum $DIST)" && \
     echo "$SHA512  $DIST" | sha512sum -c - && \
     tar -C /data/wordpress --strip-components=1 -xvzf $DIST && \
     rm -f $DIST && \
     chown -R nobody:nobody /data/wordpress
 
-ARG VERSION=2.0.1
+ARG VERSION=2.2.0
 ARG DIST=wp-cli-$VERSION.phar
 ARG URL=https://github.com/wp-cli/wp-cli/releases/download/v$VERSION/$DIST
-ARG SHA512=21b9c1d65993f88bf81cc73c0a832532cc424bea8c15563a77af1905d0dc4714f2af679dfadedd3b683f3968902b4b6be4c6cf94285da9f5582b30c1dac5397f
+ARG SHA512=2103f04a5014d629eaa42755815c9cec6bb489ed7b0ea6e77dedb309e8af098ab902b2f9c6369ae4b7cb8cc1f20fbb4dedcda83eb1d0c34b880fa6e8a3ae249d
 RUN wget -O /usr/local/bin/wp $URL && \
+    echo "expected SHA512=$(sha512sum /usr/local/bin/wp)" && \
     echo "$SHA512  /usr/local/bin/wp" | sha512sum -c - && \
     chmod +x /usr/local/bin/wp
 ENV WP_CLI_CONFIG_PATH=/etc/wp-cli.yml
