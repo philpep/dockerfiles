@@ -59,7 +59,7 @@ def check_wordpress():
         else:
             raise RuntimeError(result)
     level_map = {0: 'OK', 1: 'WARNING', 2: 'CRITICAL'}
-    name = wp('option', 'get', 'siteurl')
+    name = wp('option', 'get', 'siteurl').split('://', 1)[1]
     print('WORDPRESS {} {} - {}'.format(
         name, level_map[level],
         ', '.join(checks)))
