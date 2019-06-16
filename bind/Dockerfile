@@ -1,8 +1,20 @@
+# https://www.isc.org/bind/
+#
+# docker run --rm -it --name bind \
+#   -v /path/named.conf.local:/etc/bind/named.conf.local
+#   -v /path/zones:/var/run/named/zones
+# (to use dynamic zones, zones directory must be chown -R 100:101)
 ARG REGISTRY
 FROM $REGISTRY/alpine:3.9
 RUN apk add --no-cache bind
-RUN touch /etc/bind/named.conf
-RUN chown -R named:named /etc/bind
+RUN rm -rf /etc/bind/*
+COPY named.conf rndc.conf /etc/bind/
+RUN touch /etc/bind/rndc-key.key \
+    /etc/bind/named.conf.local
+RUN chown named:named /etc/bind/rndc-key.key
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 USER named
 WORKDIR /etc/bind
-CMD ["named", "-g", "-4"]
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["named", "-g"]
