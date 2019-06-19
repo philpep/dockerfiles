@@ -5,7 +5,7 @@
 #   -v /path/zones:/var/run/named/zones
 # (to use dynamic zones, zones directory must be chown -R 100:101)
 ARG REGISTRY
-FROM $REGISTRY/alpine:3.9
+FROM $REGISTRY/alpine:3.10
 RUN apk add --no-cache bind
 RUN rm -rf /etc/bind/*
 COPY named.conf rndc.conf /etc/bind/
