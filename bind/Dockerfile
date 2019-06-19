@@ -6,7 +6,7 @@
 # (to use dynamic zones, zones directory must be chown -R 100:101)
 ARG REGISTRY
 FROM $REGISTRY/alpine:3.10
-RUN apk add --no-cache bind
+RUN apk add --no-cache bind bind-tools
 RUN rm -rf /etc/bind/*
 COPY named.conf rndc.conf /etc/bind/
 RUN touch /etc/bind/rndc-key.key \
