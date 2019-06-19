@@ -1,3 +1,4 @@
+maillog_file = /dev/stdout
 smtp_helo_name = @@MAILSERVER_HOSTNAME@@
 myhostname = @@MAILSERVER_HOSTNAME@@
 mydestination = localhost

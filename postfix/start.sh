@@ -1,4 +1,4 @@
-#!/usr/bin/dumb-init /bin/sh
+#!/bin/sh
 set -e
 if [ ! -s /etc/ssl/postfix/tls.key ] || [ ! -s /etc/ssl/postfix/tls.crt ]; then
     echo "Generating self-signed certificate"
@@ -21,5 +21,4 @@ for fname in /etc/postfix/pgsql-transport.cf /etc/postfix/pgsql-domain.cf /etc/p
 done
 sed -i "s/@@MAILSERVER_HOSTNAME@@/$MAILSERVER_HOSTNAME/g" /etc/postfix/main.cf
 sed -i "s/@@MAILSERVER_MASQUERADE_DOMAINS@@/$MAILSERVER_MASQUERADE_DOMAINS/g" /etc/postfix/main.cf
-rsyslogd -n &
 exec postfix start-fg
