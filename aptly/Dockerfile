@@ -1,8 +1,8 @@
 ARG REGISTRY
-FROM $REGISTRY/debian:stretch-slim
+FROM $REGISTRY/debian:buster-slim
 RUN apt-get -y update && \
-	apt-get -y -t stretch-backports install aptly && \
-	apt-get -y install inoticoming gnupg
+	apt-get -y install aptly inoticoming gnupg && \
+	rm -rf /var/lib/apt/lists/*
 RUN useradd --home /var/lib/aptly --shell /bin/bash aptly
 RUN mkdir -p /var/lib/aptly/incoming
 RUN chown -R aptly:aptly /var/lib/aptly
