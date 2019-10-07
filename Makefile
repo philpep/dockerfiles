@@ -39,6 +39,8 @@ pull-base:
 	docker pull alpine:3.10
 	# used by debian:buster-slim
 	docker pull debian:buster-slim
+	# used by keycloak
+	docker pull jboss/keycloak:7.0.0
 
 ci:
 	$(MAKE) pull-base checkrebuild push all
