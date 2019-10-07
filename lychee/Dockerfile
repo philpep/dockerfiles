@@ -12,4 +12,5 @@ RUN wget -O $DIST $URL && \
     tar -C /data/lychee --strip-components=1 -xf $DIST && \
     rm -f $DIST && \
     chown -R nobody:nobody /data/lychee
+RUN echo "php_value[upload_max_filesize] = 10M" >> /etc/php7/php-fpm.d/www.conf
 USER nobody
