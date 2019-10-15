@@ -16,3 +16,6 @@ RUN wget -O $DIST $URL && \
 RUN chmod +x /data/nextcloud/occ
 USER nobody
 WORKDIR /data/nextcloud
+RUN ./occ maintenance:install --admin-pass=dummy --no-interaction && \
+    ./occ app:install calendar && \
+    rm -rf data config/config.php
