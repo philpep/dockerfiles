@@ -17,5 +17,6 @@ RUN chmod +x /data/nextcloud/occ
 USER nobody
 WORKDIR /data/nextcloud
 RUN ./occ maintenance:install --admin-pass=dummy --no-interaction && \
+    ./occ app:update --all && \
     ./occ app:install calendar && \
     rm -rf data config/config.php
