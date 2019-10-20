@@ -1,7 +1,7 @@
 ARG REGISTRY
 FROM $REGISTRY/php-fpm
 USER root
-RUN apk add --no-cache php7-posix php7-pcntl php7-intl
+RUN apk add --no-cache php7-posix php7-pcntl php7-intl php7-pecl-redis
 ARG VERSION=17.0.0
 ARG DIST=nextcloud-$VERSION.tar.bz2
 ARG URL=https://download.nextcloud.com/server/releases/$DIST
