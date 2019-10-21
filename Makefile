@@ -41,6 +41,8 @@ pull-base:
 	docker pull debian:buster-slim
 	# used by keycloak
 	docker pull jboss/keycloak:7.0.0
+	# used by jenkins
+	docker pull jenkins/jenkins/lts-alpine
 
 ci:
 	$(MAKE) pull-base checkrebuild push all
