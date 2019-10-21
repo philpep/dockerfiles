@@ -1,0 +1,24 @@
+ARG REGISTRY
+FROM $REGISTRY/debian:buster-slim
+ARG SENTRY_VERSION=9.1.2
+RUN apt-get -y update && \
+    apt-get -y install --no-install-recommends \
+	python-pip \
+    python-setuptools \
+    python-wheel \
+    python-setproctitle \
+    libpython2.7 \
+    && rm -rf /var/lib/apt/lists/*
+ARG _BUILD_DEPS="gcc g++ libc6-dev python-dev"
+RUN apt-get -y update && \
+    apt-get -y install --no-install-recommends $_BUILD_DEPS && \
+	pip install --no-cache-dir --disable-pip-version-check sentry==$SENTRY_VERSION && \
+    apt-get -y purge $_BUILD_DEPS && \
+	apt-get -y autoremove --purge && \
+	rm -rf /var/lib/apt/lists/*
+ENV SENTRY_CONF=/etc/sentry
+RUN sentry init $SENTRY_CONF
+RUN useradd --home /var/lib/sentry --shell /bin/false sentry
+USER sentry
+WORKDIR /var/lib/sentry
+CMD ["sentry", "run", "web"]
