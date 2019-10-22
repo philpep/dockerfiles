@@ -1,5 +1,6 @@
 FROM jenkins/jenkins:lts-alpine
 USER root
+RUN apk upgrade --no-cache
 RUN apk add --no-cache \
     mercurial \
     py3-tox
