@@ -40,7 +40,7 @@ pull-base:
 	# used by debian:buster-slim
 	docker pull debian:buster-slim
 	# used by keycloak
-	docker pull jboss/keycloak:7.0.0
+	docker pull jboss/keycloak:7.0.1
 
 ci:
 	$(MAKE) pull-base checkrebuild push all
