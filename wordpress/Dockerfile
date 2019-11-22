@@ -17,10 +17,10 @@ RUN wget -O $DIST $URL && \
     rm -f $DIST && \
     chown -R nobody:nobody /data/wordpress
 
-ARG VERSION=2.3.0
+ARG VERSION=2.4.0
 ARG DIST=wp-cli-$VERSION.phar
 ARG URL=https://github.com/wp-cli/wp-cli/releases/download/v$VERSION/$DIST
-ARG SHA512=fdf1c6e7d33665fc9c6202a91fdebc72be6ebad12949ecf0280765bf24819e7ca2072e6834abd3848bceaae0f7aa1896322c837ae5a5b66dd69b760c310e4a30
+ARG SHA512=4049c7e45e14276a70a41c3b0864be7a6a8cfa8ea65ebac8b184a4f503a91baa1a0d29260d03248bc74aef70729824330fb6b396336172a624332e16f64e37ef
 RUN wget -O /usr/local/bin/wp $URL && \
     echo "expected SHA512=$(sha512sum /usr/local/bin/wp)" && \
     echo "$SHA512  /usr/local/bin/wp" | sha512sum -c - && \
