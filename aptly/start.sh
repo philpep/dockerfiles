@@ -1,6 +1,6 @@
 #!/bin/sh
 if [ "$1" = "include" ]; then
-    aptly repo include -ignore-signatures $2
+    aptly repo include -ignore-signatures -accept-unsigned $2
     aptly publish list -raw | while read line; do
         prefix=$(echo $line | awk '{ print $1 }')
         dist=$(echo $line | awk '{ print $2 }')
