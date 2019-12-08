@@ -31,6 +31,7 @@ RUN install-plugins.sh \
     cobertura \
     copyartifact \
     configuration-as-code \
+    description-setter \
     disk-usage \
     embeddable-build-status \
     envinject \
