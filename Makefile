@@ -41,6 +41,8 @@ pull-base:
 	docker pull debian:buster-slim
 	# used by keycloak
 	docker pull jboss/keycloak:7.0.1
+	# imago
+	docker pull philpep/imago
 
 ci:
 	$(MAKE) pull-base checkrebuild push all
