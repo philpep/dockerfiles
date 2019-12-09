@@ -1,0 +1,18 @@
+#!/bin/sh
+set -e
+changefile=$1
+repo=$2
+dist=$(grep '^Distribution:' $changefile | awk -F':' '{ print $2 }')
+if test "$repo"; then
+    aptly repo include -repo $repo $changefile
+else
+    repo=$dist
+    aptly repo include $changefile
+fi
+if test -x ~/bin/publish-$repo; then
+    ~/bin/publish-$repo
+else
+    snap=$(uuidgen -t)
+    aptly task run snapshot create $repo-$snap from repo $repo, \
+        publish switch $dist . $repo-snap
+fi

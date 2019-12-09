@@ -1,14 +1,29 @@
 ARG REGISTRY
 FROM $REGISTRY/debian:buster-slim
-RUN apt-get -y update && \
-	apt-get -y install aptly inoticoming gnupg dumb-init && \
-	rm -rf /var/lib/apt/lists/*
+RUN apt-get -y update && apt-get -y install \
+	aptly \
+	graphviz \
+	wget \
+	ca-certificates \
+	uuid-runtime \
+	python3-flask \
+	python3-lxml \
+	gunicorn3 \
+	&& rm -rf /var/lib/apt/lists/*
 RUN useradd --home /var/lib/aptly --shell /bin/bash aptly
 RUN mkdir -p /var/lib/aptly/incoming
 RUN chown -R aptly:aptly /var/lib/aptly
-COPY start.sh /
-RUN chmod +x /start.sh
+COPY upload.py /usr/local/share/aptly/
+COPY aptly-include /usr/local/bin/
+RUN chmod +x /usr/local/bin/aptly-include
+COPY entrypoint.sh /
+RUN chmod +x /entrypoint.sh
+RUN update-alternatives --verbose --install /usr/bin/gpg gnupg /usr/bin/gpg1 50
 USER aptly
 WORKDIR /var/lib/aptly
-ENTRYPOINT ["dumb-init", "--"]
-CMD ["/start.sh"]
+COPY aptly.conf .aptly.conf
+ENV GPG_SIZE=4096
+ENV GPG_NAME="Automatic Signing Key"
+ENV GPG_EMAIL="debian@example.com"
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["upload"]
