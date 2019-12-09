@@ -11,7 +11,6 @@ from xml.sax.saxutils import escape as xml_escape
 
 from flask import Flask
 from flask import request
-from werkzeug.utils import secure_filename
 
 
 app = Flask(__name__)
@@ -103,7 +102,7 @@ def add_feed_entry(package, content):
 
 
 def upload_file(request, filename, repo=None):
-    filename = secure_filename(filename)
+    filename = os.path.basename(filename)
     dest = os.path.join(UPLOAD_FOLDER, filename)
     with open(dest, 'wb') as f:
         shutil.copyfileobj(request.stream, f)
