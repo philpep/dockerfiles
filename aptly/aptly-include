@@ -14,5 +14,5 @@ if test -x ~/bin/publish-$repo; then
 else
     snap=$(uuidgen -t)
     aptly task run snapshot create $repo-$snap from repo $repo, \
-        publish switch $dist . $repo-snap
+        publish switch $dist . $repo-$snap
 fi
