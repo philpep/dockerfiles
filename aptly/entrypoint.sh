@@ -20,7 +20,9 @@ EOF
     gpg1 --batch --gen-key gpg.batch
     mkdir -p ~/.aptly/public
 fi
-gpg1 --export --armor "$GPG_EMAIL" > ~/.aptly/public/key.asc
+if ! test -f ~/.aptly/public/key.asc; then
+    gpg1 --export --armor "$GPG_EMAIL" > ~/.aptly/public/key.asc
+fi
 case "$1" in
     api)
         exec aptly api serve --no-lock
