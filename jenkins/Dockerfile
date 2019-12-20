@@ -14,7 +14,7 @@ RUN apk add --no-cache \
 ARG VERSION=2.204.1
 ARG DIST=jenkins-war-${VERSION}.war
 ARG URL=https://repo.jenkins-ci.org/public/org/jenkins-ci/main/jenkins-war/${VERSION}/${DIST}
-ARG SHA512=4ffa2ce3be4d55f0df8021026115d9ce8f1d0f4faa16eaf9f327ce17105f61731730c2a0124fb9af5d8c16c8fee9200f9b785b23856896e292a19f5404a9d2c2
+ARG SHA512=2ebf1ff7792a2ba80d8cf6f8675864580533b62659346e9ef3334ff988899d735d5d72cb3a89308cd9287bcaa74c42306cbf80a716d03658ad748688f94f394b
 RUN mkdir -p /usr/share/jenkins
 RUN wget -O $DIST $URL && \
     echo "expected SHA512=$(sha512sum $DIST)" && \
