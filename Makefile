@@ -30,9 +30,12 @@ help:
 
 clean:
 	rm -f alpine/3.10/rootfs.tar.xz
+	rm -f alpine/3.11/rootfs.tar.xz
 	rm -f $(DEPENDS)
 
 $(subst :,\:,$(REGISTRY))/alpine\:3.10: alpine/3.10/rootfs.tar.xz
+
+$(subst :,\:,$(REGISTRY))/alpine\:3.11: alpine/3.11/rootfs.tar.xz
 
 pull-base:
 	# used by alpine:builder
@@ -50,6 +53,11 @@ ci:
 alpine/3.10/rootfs.tar.xz:
 	$(MAKE) $(REGISTRY)/alpine:builder
 	docker run --rm $(REGISTRY)/alpine:builder -r v3.10 -m http://dl-cdn.alpinelinux.org/alpine -b -t UTC \
+		-p alpine-baselayout,busybox,alpine-keys,apk-tools,libc-utils -s > $@
+
+alpine/3.11/rootfs.tar.xz:
+	$(MAKE) $(REGISTRY)/alpine:builder
+	docker run --rm $(REGISTRY)/alpine:builder -r v3.11 -m http://dl-cdn.alpinelinux.org/alpine -b -t UTC \
 		-p alpine-baselayout,busybox,alpine-keys,apk-tools,libc-utils -s > $@
 
 .PHONY: $(DEPENDS)
