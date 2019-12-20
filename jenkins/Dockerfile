@@ -11,7 +11,7 @@ RUN apk add --no-cache \
     ttf-dejavu \
     coreutils \
     py3-tox
-ARG VERSION=2.190.3
+ARG VERSION=2.204.1
 ARG DIST=jenkins-war-${VERSION}.war
 ARG URL=https://repo.jenkins-ci.org/public/org/jenkins-ci/main/jenkins-war/${VERSION}/${DIST}
 ARG SHA512=4ffa2ce3be4d55f0df8021026115d9ce8f1d0f4faa16eaf9f327ce17105f61731730c2a0124fb9af5d8c16c8fee9200f9b785b23856896e292a19f5404a9d2c2
