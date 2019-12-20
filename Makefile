@@ -36,7 +36,7 @@ $(subst :,\:,$(REGISTRY))/alpine\:3.10: alpine/3.10/rootfs.tar.xz
 
 pull-base:
 	# used by alpine:builder
-	docker pull alpine:3.10
+	docker pull alpine:3.11
 	# used by debian:buster-slim
 	docker pull debian:buster-slim
 	# used by keycloak

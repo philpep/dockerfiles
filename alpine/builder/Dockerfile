@@ -1,4 +1,4 @@
-FROM alpine:3.10
+FROM alpine:3.11
 COPY mkimage-alpine.bash /
 RUN apk upgrade --no-cache
 RUN apk add --no-cache bash tzdata xz
