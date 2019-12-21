@@ -16,9 +16,9 @@ RUN apk add --no-cache \
     openssh-client \
     curl \
     mercurial
-RUN apk add --no-cache py2-pip && \
-    pip install --no-cache-dir --disable-pip-version-check 'hg-evolve>=9.1' && \
-    apk del py2-pip
+RUN apk add --no-cache py3-pip && \
+    python3 -m pip install --no-cache-dir --disable-pip-version-check 'hg-evolve>=9.2.1' && \
+    apk del py3-pip
 RUN apk add --no-cache tzdata && \
     cp /usr/share/zoneinfo/Europe/Paris /etc/localtime && \
     echo "Europe/Paris" > /etc/timezone && \
