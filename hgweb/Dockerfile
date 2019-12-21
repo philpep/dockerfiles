@@ -1,7 +1,8 @@
 ARG REGISTRY
 FROM $REGISTRY/alpine:3.11
-RUN apk add --no-cache python3 py3-setuptools py3-pip python3-dev g++ && \
-    python3 -m pip install --disable-pip-version-check --no-cache-dir gunicorn eventlet pygments 'mercurial>=5.2' 'hg-evolve>=9.2.1' && \
+RUN apk add --no-cache mercurial py3-gunicorn py3-pygments
+RUN apk add --no-cache py3-pip python3-dev g++ && \
+    python3 -m pip install --disable-pip-version-check --no-cache-dir eventlet 'hg-evolve>=9.2.1' && \
 	apk del py3-pip python3-dev g++
 COPY hgweb.py hgweb.config gunicorn.conf /etc/mercurial/
 RUN mkdir /repos
