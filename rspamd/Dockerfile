@@ -1,5 +1,5 @@
 ARG REGISTRY
-FROM $REGISTRY/alpine:3.10
+FROM $REGISTRY/alpine:3.11
 RUN apk add --no-cache \
     rspamd \
     rspamd-controller \
