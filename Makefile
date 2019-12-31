@@ -20,7 +20,7 @@ help:
 	@echo "make push nginx       ; build and push nginx image"
 	@echo "make run nginx        ; build and run nginx image (for testing)"
 	@echo "make exec nginx       ; build and start interactive shell in nginx image (for debugging)"
-	@echo "make checkrebuild all ; build and check if image has update availables (using apk or apt-get)"
+	@echo "make checkrebuild all ; build and check if image has update availables (using https://github.com/philpep/duuh)
 	@echo "                        and rebuild with --no-cache is image has updates"
 	@echo "make pull-base        ; pull base images from docker hub used to bootstrap other images"
 	@echo "make ci               ; alias to make pull-base checkrebuild push all"
@@ -71,7 +71,7 @@ ifeq (exec,$(filter exec,$(MAKECMDGOALS)))
 	docker run --entrypoint sh --rm -it $<
 endif
 ifeq (check,$(filter check,$(MAKECMDGOALS)))
-	./check_update.sh $<
+	duuh $<
 endif
 
 $(IMAGES): %:
@@ -81,5 +81,6 @@ else
 	docker build --build-arg REGISTRY=$(REGISTRY) -t $@ $(subst :,/,$(subst $(REGISTRY)/,,$@))
 endif
 ifeq (checkrebuild,$(filter checkrebuild,$(MAKECMDGOALS)))
-	./check_update.sh $@ || (docker build --build-arg REGISTRY=$(REGISTRY) --no-cache -t $@ $(subst :,/,$(subst $(REGISTRY)/,,$@)) && ./check_update.sh $@)
+	which duuh >/dev/null || (>&2 echo "checkrebuild require duuh command to be installed in PATH" && exit 1)
+	duuh $@ || (docker build --build-arg REGISTRY=$(REGISTRY) --no-cache -t $@ $(subst :,/,$(subst $(REGISTRY)/,,$@)) && duuh $@)
 endif
