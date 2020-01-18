@@ -36,6 +36,7 @@ RUN install-plugins.sh \
     embeddable-build-status \
     envinject \
     greenballs \
+    kubernetes \
     htmlpublisher \
     mercurial \
     oic-auth \
