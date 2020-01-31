@@ -11,10 +11,10 @@ RUN apk add --no-cache \
     ttf-dejavu \
     coreutils \
     py3-tox
-ARG VERSION=2.204.1
+ARG VERSION=2.204.2
 ARG DIST=jenkins-war-${VERSION}.war
 ARG URL=https://repo.jenkins-ci.org/public/org/jenkins-ci/main/jenkins-war/${VERSION}/${DIST}
-ARG SHA512=2ebf1ff7792a2ba80d8cf6f8675864580533b62659346e9ef3334ff988899d735d5d72cb3a89308cd9287bcaa74c42306cbf80a716d03658ad748688f94f394b
+ARG SHA512=923ae49caf5b3d2054cf698badb31ea2c4dd4420d6c6488b389a6c62b9fc6d841e672d71cdc8b0c6152ef5ea9b921570a32d0466a423d76d83eeb96effeb0998
 RUN mkdir -p /usr/share/jenkins
 RUN wget -O $DIST $URL && \
     echo "expected SHA512=$(sha512sum $DIST)" && \
