@@ -50,6 +50,7 @@ ENTRY_TEMPLATE = """<entry>
   <name>{name}</name>
   <email>{email}</email>
 </author>
+<link href="{id}"></link>
 <id>{id}</id>
 <updated>{updated}</updated>
 <published>{published}</published>
@@ -84,6 +85,7 @@ def add_feed_entry(package, content):
         index = -1
     else:
         index = root.index(first)
+    pkg = package.split('_', 1)[0]
     entry = ET.XML(ENTRY_TEMPLATE.format(
         name=xml_escape(name),
         email=xml_escape(email),
@@ -92,7 +94,7 @@ def add_feed_entry(package, content):
         distribution=xml_escape(distribution),
         updated=now,
         published=now,
-        id=PUBLIC_URL,
+        id=f'{PUBLIC_URL}/pool/main/{pkg[0]}/{pkg}/?p={package}',
     ))
     root.insert(index, entry)
     for old in root.xpath(
