@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import datetime
+import html
 import re
 import os
 import shutil
@@ -52,7 +53,7 @@ ENTRY_TEMPLATE = """<entry>
 <id>{id}</id>
 <updated>{updated}</updated>
 <published>{published}</published>
-<content type="text">{content}</content>
+<content type="html">{content}</content>
 </entry>"""
 
 if not os.path.exists(ATOM_FEED):
@@ -87,7 +88,7 @@ def add_feed_entry(package, content):
         name=xml_escape(name),
         email=xml_escape(email),
         package=xml_escape(package),
-        content=xml_escape(content),
+        content=html.escape('<pre>{}</pre>'.format(html.escape(content))),
         distribution=xml_escape(distribution),
         updated=now,
         published=now,
