@@ -6,6 +6,7 @@ RUN apk add --no-cache \
     dovecot-pigeonhole-plugin \
     dovecot-pop3d \
     dovecot-lmtpd \
+    dovecot-ldap \
     rspamd-client \
     dumb-init
 RUN mv /etc/ssl/dovecot/server.key /etc/ssl/dovecot/tls.key && \
