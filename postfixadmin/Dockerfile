@@ -12,6 +12,5 @@ RUN wget -O $DIST $URL && \
     echo "expected SHA512=$(sha512sum $DIST)" && \
     echo "$SHA512  $DIST" | sha512sum -c - && \
     tar -C /data/postfixadmin --strip-components=1 -xvzf $DIST && \
-    rm -f $DIST && \
-    chown -R nobody:nobody /data/postfixadmin
+    rm -f $DIST
 USER nobody
