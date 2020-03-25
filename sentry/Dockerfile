@@ -16,7 +16,7 @@ RUN apt-get -y update && \
     apt-get -y purge $_BUILD_DEPS && \
 	apt-get -y autoremove --purge && \
 	rm -rf /var/lib/apt/lists/*
-RUN pip install --no-cache-dir --disable-pip-version-check sentry-auth-oidc==3.0.0
+RUN pip install --no-cache-dir --disable-pip-version-check 'sentry-auth-oidc<3'
 ENV SENTRY_CONF=/etc/sentry
 RUN sentry init $SENTRY_CONF
 RUN useradd --home /var/lib/sentry --shell /bin/false sentry
