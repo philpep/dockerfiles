@@ -19,6 +19,6 @@ WORKDIR /data/nextcloud
 RUN ./occ maintenance:install --admin-pass=dummy --no-interaction && \
     ./occ app:update --all && \
     ./occ app:install calendar && \
-    ./occ app:install user_saml && \
+    ./occ app:install oidc_login && \
     ./occ app:install sentry && \
     rm -rf data config/config.php
