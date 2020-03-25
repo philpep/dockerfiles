@@ -13,4 +13,5 @@ RUN wget -O $DIST $URL && \
     echo "$SHA512  $DIST" | sha512sum -c - && \
     tar -C /data/postfixadmin --strip-components=1 -xvzf $DIST && \
     rm -f $DIST
+RUN install -d -o nobody -g nobody /data/postfixadmin/templates_c
 USER nobody
