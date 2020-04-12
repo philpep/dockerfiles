@@ -1,0 +1,13 @@
+#!/bin/sh
+set -e
+days=${1:-10}
+timedelta=$(expr $days '*' 86400 || true) # expr exit 1 when result is 0...
+now=$(date +%s)
+
+for snapshot in $(aptly snapshot list -sort=time -raw | tac); do
+    snapshot_date=$(date -d $(aptly snapshot show $snapshot | grep '^Created At:' | awk '{ print $3 }') +%s)
+    if test $(expr $now - $snapshot_date) -gt $timedelta; then
+        aptly snapshot drop $snapshot || true
+    fi
+done
+aptly db cleanup

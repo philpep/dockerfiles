@@ -1,0 +1,5 @@
+#!/bin/sh
+set -e
+for mirror in $(aptly mirror list -raw); do
+    aptly mirror update $mirror || true
+done

@@ -10,7 +10,7 @@ else
     aptly repo include $changefile
 fi
 if test -x ~/bin/publish-$repo; then
-    ~/bin/publish-$repo
+    ~/bin/publish-$repo $dist
 else
     snap=$(uuidgen -t)
     aptly task run snapshot create $repo-$snap from repo $repo, \

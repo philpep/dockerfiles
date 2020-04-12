@@ -14,8 +14,8 @@ RUN useradd --home /var/lib/aptly --shell /bin/bash aptly
 RUN mkdir -p /var/lib/aptly/incoming
 RUN chown -R aptly:aptly /var/lib/aptly
 COPY upload.py /usr/local/share/aptly/
-COPY aptly-include /usr/local/bin/
-RUN chmod +x /usr/local/bin/aptly-include
+COPY aptly-include aptly-snapshot-cleanup aptly-mirror-update /usr/local/bin/
+RUN chmod +x /usr/local/bin/aptly-*
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 RUN update-alternatives --verbose --install /usr/bin/gpg gnupg /usr/bin/gpg1 50
