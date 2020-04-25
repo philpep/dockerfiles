@@ -2,8 +2,8 @@
 set -e
 changefile=$1
 repo=$2
-dist=$(grep '^Distribution:' $changefile | awk -F':' '{ print $2 }')
-if test "$repo"; then
+dist=$(grep '^Distribution: ' $changefile | awk '{ print $2 }')
+if test -n "$repo"; then
     aptly repo include -repo $repo $changefile
 else
     repo=$dist
