@@ -5,10 +5,10 @@ USER root
 RUN apk add --no-cache python3
 COPY check_wordpress /usr/local/bin/
 RUN chmod +x /usr/local/bin/check_wordpress
-ARG VERSION=5.2.4
+ARG VERSION=5.4.1
 ARG DIST=wordpress-$VERSION.tar.gz
 ARG URL=https://wordpress.org/$DIST
-ARG SHA512=eaf6e1555f13e4fe1f1a99691b271e658d9a83ab5fa7de1480987875565aab45d246bf8bb2e9828bd43979b96a0fb0db1ebf61c62c4967d9af08a370bef083e0
+ARG SHA512=5ed4f3bd593febdf2aec4c582c2ed850d3bf52122273b4306c1fba87939a675228df84092a709052f13e0096b2545cd6f078ab89b232ee4b4dce467d834de0cd
 RUN mkdir -p /data/wordpress
 RUN wget -O $DIST $URL && \
     echo "expected SHA512=$(sha512sum $DIST)" && \
