@@ -18,4 +18,4 @@ RUN ln -s /bin/busybox /bin/ps && \
 RUN apt-get -y update && \
 	apt-get -y upgrade && \
 	rm -rf /var/lib/apt/lists/*
-ENTRYPOINT ["bash"]
+CMD ["bash"]
