@@ -1,10 +1,10 @@
 ARG REGISTRY
 FROM $REGISTRY/alpine:3.11
 RUN apk add --no-cache ca-certificates
-ARG VERSION=v5.1.0
-ARG DIST=oauth2_proxy-$VERSION.linux-amd64.go1.14.tar.gz
-ARG URL=https://github.com/pusher/oauth2_proxy/releases/download/$VERSION/$DIST
-ARG SHA512=6ccdee92a800eaab36f8cab966fcea26dd4260203e423870ce4f6cfe8c241aeccd717822cc8ba42ea026f6b4527c871d8edf55db43c19fc84d7a6ac2d5e04def
+ARG VERSION=v5.1.1
+ARG DIST=oauth2_proxy-$VERSION.linux-amd64.go1.14.2.tar.gz
+ARG URL=https://github.com/oauth2-proxy/oauth2-proxy/releases/download/$VERSION/$DIST
+ARG SHA512=4250de0e1651e8c001255f5df4b8e0c4ef93b8c4309a4d894e8518f40873ed273ad72feb1406d9da32dd566a2d1c4c14a3f6a0a15c96e1478aa823751843cfe4
 RUN wget -O $DIST $URL && \
     echo "expected SHA512=$(sha512sum $DIST)" && \
     echo "$SHA512  $DIST" | sha512sum -c - && \
