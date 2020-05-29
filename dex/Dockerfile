@@ -5,10 +5,10 @@ RUN adduser -D -u 1000 -h /home/user user
 USER user
 RUN mkdir -p /home/user/go/src/github.com/dex
 WORKDIR /home/user/go/src/github.com/dex
-ARG VERSION=2.23.0
+ARG VERSION=2.24.0
 ARG DIST=v$VERSION.tar.gz
 ARG URL=https://github.com/dexidp/dex/archive/$DIST
-ARG SHA512=2c7c79fdb6cddef7daaa74e6e6634fb8867ceb6dacd45f4676cee9274dc5a601186cbb51d5c8404f0c40684f8bba8c08629cb4e791479bfc689c3972f1883945
+ARG SHA512=af16fa788dc4b6bef6bbf53adb6f9a0fa42dde154e4b9d89ae1113f8085570b7b800d697acd7dbbdda5656f9a5c6dd9df7de9a43c0ae5f3dff8b0b736c0c884a
 RUN wget -O $DIST $URL && \
     echo "expected SHA512=$(sha512sum $DIST)" && \
     echo "$SHA512  $DIST" | sha512sum -c - && \
