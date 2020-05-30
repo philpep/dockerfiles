@@ -1,5 +1,5 @@
 ARG REGISTRY
-FROM $REGISTRY/alpine:3.11
+FROM $REGISTRY/alpine:3.12
 RUN apk add --no-cache ca-certificates
 ARG VERSION=v5.1.1
 ARG DIST=oauth2_proxy-$VERSION.linux-amd64.go1.14.2.tar.gz

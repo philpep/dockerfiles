@@ -1,5 +1,5 @@
 ARG REGISTRY
-FROM $REGISTRY/alpine:3.11 as build
+FROM $REGISTRY/alpine:3.12 as build
 RUN apk add --no-cache npm
 ARG VERSION=1.8.0
 ARG SHA512=47dc18dcb2ebcf2cd3320e79519f0a1809ae49c1bffb2089c169e7cfc58f331fc9511fdb1f7894f4605db4a5bf28680ec39b4430860bdd62a3a989d7e1cbdd38
@@ -21,7 +21,7 @@ RUN npm install
 RUN npm audit fix
 
 ARG REGISTRY
-FROM $REGISTRY/alpine:3.11
+FROM $REGISTRY/alpine:3.12
 RUN apk add --no-cache nodejs
 RUN adduser -h /var/lib/etherpad-lite -S -D etherpad-lite
 COPY --from=build /usr/share/etherpad-lite/src /usr/share/etherpad-lite/src

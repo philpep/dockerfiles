@@ -3,7 +3,7 @@
 # To disable protected mode: redis-server --protected-mode no
 # To disable persistence: redis-server --appendfsync no --save ""
 ARG REGISTRY
-FROM $REGISTRY/alpine:3.11
+FROM $REGISTRY/alpine:3.12
 RUN apk add --no-cache redis 
 USER redis
 WORKDIR /var/lib/redis

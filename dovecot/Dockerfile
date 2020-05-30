@@ -1,5 +1,5 @@
 ARG REGISTRY
-FROM $REGISTRY/alpine:3.11
+FROM $REGISTRY/alpine:3.12
 RUN apk add --no-cache \
     dovecot \
     dovecot-pgsql \

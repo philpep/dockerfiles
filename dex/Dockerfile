@@ -1,5 +1,5 @@
 ARG REGISTRY
-FROM $REGISTRY/alpine:3.11 as builder
+FROM $REGISTRY/alpine:3.12 as builder
 RUN apk add --no-cache go make git
 RUN adduser -D -u 1000 -h /home/user user
 USER user
@@ -17,7 +17,7 @@ RUN wget -O $DIST $URL && \
 RUN go build -o ~/go/bin/dex -v -ldflags "-w -X github.com/dexidp/dex/version.Version=$VERSION" github.com/dexidp/dex/cmd/dex
 
 ARG REGISTRY
-FROM $REGISTRY/alpine:3.11
+FROM $REGISTRY/alpine:3.12
 RUN apk add --no-cache ca-certificates openssl
 COPY --from=builder /home/user/go/bin/dex /usr/local/bin/dex
 COPY --from=builder /home/user/go/src/github.com/dex/web /home/user/web
