@@ -1,9 +1,9 @@
 ARG REGISTRY
 FROM $REGISTRY/php-fpm
-ARG VERSION=1.4.4
+ARG VERSION=1.4.5
 ARG DIST=roundcubemail-$VERSION-complete.tar.gz
 ARG URL=https://github.com/roundcube/roundcubemail/releases/download/$VERSION/$DIST
-ARG SHA512=ddea321b5266c547f67c010147e9aa1457bea4802bec37f9e9d87e691bdc8df27f5c90cff8770de2458822160b85f7359f62742072ae1d642a040b9d88651519
+ARG SHA512=031a4669249efa67050212fc6b19429751fabb8204ffe1ea0088810f2efe30de9b7bf986c21c3091b6037628a0527550e33e96ad67cd0f16c85dc5398f67b761
 USER root
 # for password plugin
 RUN apk add --no-cache dovecot
