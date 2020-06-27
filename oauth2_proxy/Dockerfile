@@ -1,6 +1,8 @@
 ARG REGISTRY
-FROM $REGISTRY/alpine:3.12
-RUN apk add --no-cache ca-certificates
+FROM $REGISTRY/debian:buster-slim
+RUN apt-get update && apt-get -y install --no-install-recommends \
+	ca-certificates \
+	&& rm -rf /var/lib/apt/lists/*
 ARG VERSION=v6.0.0
 ARG DIST=oauth2-proxy-$VERSION.linux-amd64.go1.14.2.tar.gz
 ARG URL=https://github.com/oauth2-proxy/oauth2-proxy/releases/download/$VERSION/$DIST
