@@ -1,10 +1,13 @@
 ARG REGISTRY
-FROM $REGISTRY/alpine:3.12
-RUN apk add --no-cache py3-pip py3-yaml
-RUN pip3 install --disable-pip-version-check --no-cache-dir kubernetes raven
-ADD https://raw.githubusercontent.com/getsentry/sentry-kubernetes/74a7eb9d84c0405f3b07f9838a9674ace669e755/sentry-kubernetes.py /usr/local/bin/
+FROM $REGISTRY/debian:buster-slim
+RUN apt-get update && apt-get -y install --no-install-recommends \
+	python3-pip \
+	python3-yaml \
+	&& rm -rf /var/lib/apt/lists/*
+RUN python3 -m pip install --disable-pip-version-check --no-cache-dir kubernetes raven
+ADD https://raw.githubusercontent.com/getsentry/sentry-kubernetes/521b5129/sentry-kubernetes.py /usr/local/bin/
 RUN chmod a+r /usr/local/bin/sentry-kubernetes.py
-RUN adduser -h /var/lib/sentry -S -D sentry
+RUN useradd --home /var/lib/sentry --shell /bin/bash sentry
 WORKDIR /var/lib/sentry
 USER sentry
 CMD ["python3", "/usr/local/bin/sentry-kubernetes.py"]
