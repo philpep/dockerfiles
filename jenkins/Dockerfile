@@ -1,30 +1,28 @@
 ARG REGISTRY
-FROM $REGISTRY/alpine:3.12
-RUN apk add --no-cache \
-    openjdk11-jdk \
+FROM $REGISTRY/debian:buster-slim
+RUN apt-get update && apt-get -y install --no-install-recommends \
+	gnupg \
+	ca-certificates \
+	&& rm -rf /var/lib/apt/lists/*
+RUN wget -q -O - https://apt.philpep.org/key.asc | apt-key --keyring /etc/apt/trusted.gpg.d/philpep.gpg add -
+RUN echo deb https://apt.philpep.org buster-backports main > /etc/apt/sources.list.d/philpep.list
+RUN wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | apt-key --keyring /etc/apt/trusted.gpg.d/jenkins.gpg add -
+RUN echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list
+RUN apt-get update && apt-get -y install --no-install-recommends -t buster-backports \
+	mercurial \
+	&& rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get -y install --no-install-recommends \
     git \
-    mercurial \
     openssh-client \
     curl \
     unzip \
-    bash \
-    ttf-dejavu \
-    coreutils \
-    py3-tox
-ARG VERSION=2.235.1
-ARG DIST=jenkins-war-${VERSION}.war
-ARG URL=https://repo.jenkins-ci.org/public/org/jenkins-ci/main/jenkins-war/${VERSION}/${DIST}
-ARG SHA512=1be1f1845de87316107469b9b7c4d0e1e6b0f014f495981f2ecc2ce3acbfd820275c187c61b3f9664ad2a61312e4504171c45edf05e1711bbf61554c5f3fd653
-RUN mkdir -p /usr/share/jenkins
-RUN wget -O $DIST $URL && \
-    echo "expected SHA512=$(sha512sum $DIST)" && \
-    echo "$SHA512  $DIST" | sha512sum -c - && \
-    mv $DIST /usr/share/jenkins/jenkins.war
-RUN adduser -h /var/jenkins_home -s /bin/bash -D jenkins
-RUN install -o jenkins -g jenkins -d /var/jenkins_home/plugins
+    tox \
+	jenkins \
+    openjdk-11-jdk-headless \
+	&& rm -rf /var/lib/apt/lists/*
 COPY jenkins-support install-plugins.sh jenkins.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/*.sh
-ENV PATH=/usr/lib/jvm/java-11-openjdk/bin/:$PATH
+#ENV PATH=/usr/share/binfmts:$PATH
 ENV JENKINS_UC=https://updates.jenkins.io
 RUN install-plugins.sh \
     ansicolor \
@@ -44,9 +42,9 @@ RUN install-plugins.sh \
     ssh-agent \
     timestamper \
     ws-cleanup
-ENV JENKINS_HOME=/var/jenkins_home
+ENV JENKINS_HOME=/var/lib/jenkins
 ENV COPY_REFERENCE_FILE_LOG $JENKINS_HOME/copy_reference_file.log
-WORKDIR /var/jenkins_home
+WORKDIR /var/lib/jenkins
 USER jenkins
 EXPOSE 8080
 ENTRYPOINT ["/usr/local/bin/jenkins.sh"]
