@@ -1,8 +1,8 @@
 ARG REGISTRY
 FROM $REGISTRY/alpine:3.12 as build
 RUN apk add --no-cache npm
-ARG VERSION=1.8.0
-ARG SHA512=47dc18dcb2ebcf2cd3320e79519f0a1809ae49c1bffb2089c169e7cfc58f331fc9511fdb1f7894f4605db4a5bf28680ec39b4430860bdd62a3a989d7e1cbdd38
+ARG VERSION=1.8.6
+ARG SHA512=5dff4acfc5a23752a7e0496fbfa3d263b40e76f67dba26e8c1a9cf8889ed302172e00e94710933b7b5b3f9580a675808d85d9da8a2b3aade08a03e2b7999a384
 ARG DIST=$VERSION.tar.gz
 ARG URL=https://github.com/ether/etherpad-lite/archive/$DIST
 RUN adduser -h /usr/share/etherpad-lite -S -D etherpad-lite
