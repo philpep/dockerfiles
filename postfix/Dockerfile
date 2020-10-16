@@ -1,14 +1,14 @@
 ARG REGISTRY
-FROM $REGISTRY/alpine:3.12
-RUN apk add --no-cache \
+FROM $REGISTRY/debian:buster-slim
+RUN apt-get update && apt-get -y install --no-install-recommends \
     postfix \
     postfix-pgsql \
     postfix-pcre \
     ca-certificates \
-    openssl
-RUN deluser vmail
-RUN addgroup -g 425 -S vmail
-RUN adduser -h /var/lib/vmail -S -D -H -u 425 -G vmail vmail
+    openssl \
+    && rm -rf /var/lib/apt/lists/*
+RUN addgroup --gid 425 --system vmail
+RUN useradd --home /var/lib/vmail --create-home --system --uid 425 --gid 425 vmail
 RUN install -o vmail -g vmail -d /var/lib/vmail
 ENV MAILSERVER_DB_USER=postgres
 ENV MAILSERVER_DB_PASSWORD=postgres
