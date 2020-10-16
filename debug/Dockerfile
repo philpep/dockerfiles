@@ -1,11 +1,11 @@
 ARG REGISTRY
-FROM $REGISTRY/alpine:3.12
-RUN apk add --no-cache \
-    bind-tools \
-    busybox-extras \
+FROM $REGISTRY/debian:buster-slim
+RUN apt-get update && apt-get -y install --no-install-recommends \
+    bind9-host \
     curl \
-    httpie \
     ca-certificates \
+    httpie \
+    jq \
+    mariadb-client \
     postgresql-client \
-    mysql-client \
-    jq
+    && rm -rf /var/lib/apt/lists/*
