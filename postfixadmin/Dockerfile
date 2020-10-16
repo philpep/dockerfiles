@@ -16,4 +16,6 @@ RUN wget -O $DIST $URL && \
     tar -C /data/postfixadmin --strip-components=1 -xvzf $DIST && \
     rm -f $DIST
 RUN install -d -o nobody -g nogroup /data/postfixadmin/templates_c
+# enable proc_open
+RUN sed -i 's@,proc_open@@g' /etc/php/7.3/fpm/pool.d/www.conf
 USER nobody
