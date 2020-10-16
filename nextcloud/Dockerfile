@@ -1,7 +1,9 @@
 ARG REGISTRY
 FROM $REGISTRY/php-fpm
 USER root
-RUN apk add --no-cache php7-posix php7-pcntl php7-intl php7-pecl-redis
+RUN apt-get update && apt-get -y install --no-install-recommends \
+    bzip2 \
+    && rm -rf /var/lib/apt/lists/*
 ARG VERSION=19.0.3
 ARG DIST=nextcloud-$VERSION.tar.bz2
 ARG URL=https://download.nextcloud.com/server/releases/$DIST
@@ -12,7 +14,7 @@ RUN wget -O $DIST $URL && \
     echo "$SHA512  $DIST" | sha512sum -c - && \
     tar -C /data/nextcloud --strip-components=1 -xf $DIST && \
     rm -f $DIST && \
-    chown -R nobody:nobody /data/nextcloud
+    chown -R nobody:nogroup /data/nextcloud
 RUN chmod +x /data/nextcloud/occ
 USER nobody
 WORKDIR /data/nextcloud

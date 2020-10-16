@@ -11,6 +11,6 @@ RUN wget -O $DIST $URL && \
     echo "$SHA512  $DIST" | sha512sum -c - && \
     tar -C /data/lychee --strip-components=1 -xf $DIST && \
     rm -f $DIST && \
-    chown -R nobody:nobody /data/lychee
-RUN echo "php_value[upload_max_filesize] = 10M" >> /etc/php7/php-fpm.d/www.conf
+    chown -R nobody:nogroup /data/lychee
+RUN echo "php_value[upload_max_filesize] = 10M" >> /etc/php/7.3/fpm/pool.d/www.conf
 USER nobody

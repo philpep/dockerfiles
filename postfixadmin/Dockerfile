@@ -6,12 +6,14 @@ ARG URL=https://github.com/postfixadmin/postfixadmin/archive/$DIST
 ARG SHA512=2bd7ae05addbaf3c6c7eebea16ec1e21b2c67c8e6161446ed82a9553c26c04e19c1ec9ce248a9b9df504df56d309590259e6f04907b04b593548028b40e40d47
 USER root
 # dovecotpw for password generation
-RUN apk add --no-cache dovecot
+RUN apt-get update && apt-get -y install --no-install-recommends \
+    dovecot-core \
+    && rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /data/postfixadmin
 RUN wget -O $DIST $URL && \
     echo "expected SHA512=$(sha512sum $DIST)" && \
     echo "$SHA512  $DIST" | sha512sum -c - && \
     tar -C /data/postfixadmin --strip-components=1 -xvzf $DIST && \
     rm -f $DIST
-RUN install -d -o nobody -g nobody /data/postfixadmin/templates_c
+RUN install -d -o nobody -g nogroup /data/postfixadmin/templates_c
 USER nobody

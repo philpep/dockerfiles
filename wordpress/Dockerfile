@@ -2,7 +2,9 @@ ARG REGISTRY
 FROM $REGISTRY/php-fpm
 USER root
 # python3 required for check_wordpress script
-RUN apk add --no-cache python3
+RUN apt-get update && apt-get -y install --no-install-recommends \
+    python3 \
+    && rm -rf /var/lib/apt/lists/*
 COPY check_wordpress /usr/local/bin/
 RUN chmod +x /usr/local/bin/check_wordpress
 ARG VERSION=5.5.1
@@ -15,7 +17,7 @@ RUN wget -O $DIST $URL && \
     echo "$SHA512  $DIST" | sha512sum -c - && \
     tar -C /data/wordpress --strip-components=1 -xvzf $DIST && \
     rm -f $DIST && \
-    chown -R nobody:nobody /data/wordpress
+    chown -R nobody:nogroup /data/wordpress
 
 ARG VERSION=2.4.0
 ARG DIST=wp-cli-$VERSION.phar

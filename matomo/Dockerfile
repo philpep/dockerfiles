@@ -8,6 +8,6 @@ RUN wget -O $SRC https://builds.matomo.org/$SRC && \
     echo "expected SHA512=$(sha512sum $SRC)" && \
     echo "$SHA512  $SRC" | sha512sum -c - && \
     tar -C /data/matomo -xvzf $SRC && \
-    chown -R nobody:nobody /data/matomo && \
+    chown -R nobody:nogroup /data/matomo && \
     rm -f $SRC
 USER nobody
