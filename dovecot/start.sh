@@ -2,7 +2,7 @@
 set -e
 if [ ! -s /etc/ssl/dh.pem ]; then
     echo "Generating dh.pem"
-    openssl dhparam -out /etc/ssl/dh.pem 1024
+    openssl dhparam -out /etc/ssl/dh.pem 2048
 fi
 for fname in /etc/dovecot/dovecot-dict-quota.conf /etc/dovecot/dovecot-sql.conf; do
     sed -i "s/@@MAILSERVER_DB_USER@@/$MAILSERVER_DB_USER/g" $fname

@@ -1,18 +1,24 @@
 ARG REGISTRY
-FROM $REGISTRY/alpine:3.12
-RUN apk add --no-cache \
-    dovecot \
-    dovecot-pgsql \
-    dovecot-pigeonhole-plugin \
+FROM $REGISTRY/debian:buster-slim
+RUN apt-get update && apt-get -y install --no-install-recommends \
+    dovecot-core \
+    dovecot-imapd \
     dovecot-pop3d \
+    dovecot-pgsql \
+    dovecot-sieve \
     dovecot-lmtpd \
-    dovecot-ldap \
-    rspamd-client \
-    dumb-init
-RUN mv /etc/ssl/dovecot/server.key /etc/ssl/dovecot/tls.key && \
-    mv /etc/ssl/dovecot/server.pem /etc/ssl/dovecot/tls.crt
-RUN addgroup -g 425 -S vmail
-RUN adduser -h /var/lib/vmail -S -D -H -u 425 -G vmail vmail
+    ssl-cert \
+    dumb-init \
+    && rm -rf /var/lib/apt/lists/*
+RUN echo "deb http://deb.debian.org/debian buster-backports main contrib non-free" > /etc/apt/sources.list.d/backports.list
+RUN apt-get update && apt-get -y install -t buster-backports --no-install-recommends \
+    rspamd \
+    && rm -rf /var/lib/apt/lists/*
+RUN mkdir /etc/ssl/dovecot
+RUN cp /etc/ssl/private/ssl-cert-snakeoil.key /etc/ssl/dovecot/tls.key && \
+    cp /etc/ssl/certs/ssl-cert-snakeoil.pem /etc/ssl/dovecot/tls.crt
+RUN addgroup --gid 425 --system vmail
+RUN useradd --home /var/lib/vmail --create-home --system --uid 425 --gid 425 vmail
 RUN install -o vmail -g vmail -d /var/lib/vmail
 COPY dovecot.conf dovecot-dict-quota.conf dovecot-sql.conf rspamd.sieve /etc/dovecot/
 RUN cd /etc/dovecot && sievec rspamd.sieve
