@@ -1,0 +1,9 @@
+{
+    "authenticators": [
+        {
+            "name": "HasAccessRole",
+            "fileName": "hasAccessRole.js",
+            "description": "Allow access only for users having the access role"
+        }
+    ]
+}
