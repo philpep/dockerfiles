@@ -32,8 +32,6 @@ clean:
 	rm -f $(DEPENDS)
 
 pull-base:
-	# used by alpine:3.12
-	docker pull alpine:3.12
 	# used by debian:buster-slim
 	docker pull debian:buster-slim
 	# used by keycloak
