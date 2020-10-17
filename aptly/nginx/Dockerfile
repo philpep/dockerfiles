@@ -5,4 +5,4 @@ RUN apt-get update && apt-get -y install --no-install-recommends \
     libnginx-mod-http-fancyindex \
     && rm -rf /var/lib/apt/lists/*
 COPY nginx.conf /etc/nginx/sites-available/default
-USER nginx
+USER www-data
