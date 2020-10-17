@@ -1,17 +1,26 @@
 ARG REGISTRY
-FROM $REGISTRY/alpine:3.12
-RUN apk add --no-cache nginx
-RUN sed -i '/user nginx;/d' /etc/nginx/nginx.conf
+FROM $REGISTRY/debian:buster-slim
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    nginx-light \
+    && rm -rf /var/lib/apt/lists/*
+RUN sed -i '/user www-data;/d' /etc/nginx/nginx.conf
+RUN sed -i 's@pid .*@pid /dev/null;@g' /etc/nginx/nginx.conf
 RUN sed -i 's/worker_processes auto;/worker_processes 1;/g' /etc/nginx/nginx.conf
-RUN sed -i 's/80 default_server/8080 default_server/g' /etc/nginx/conf.d/default.conf
-RUN install -d -o nginx /run/nginx
-COPY proxy.conf /etc/nginx/conf.d/proxy.conf
+RUN install -d -o www-data \
+    /var/lib/nginx/body \
+    /var/lib/nginx/fastcgi \
+    /var/lib/nginx/uwsgi \
+    /var/lib/nginx/scgi \
+    /var/lib/nginx/proxy
+RUN rm -rf /var/www/*
+COPY default.conf /etc/nginx/sites-available/default
+COPY proxy.conf /etc/nginx/conf.d/
 COPY fastcgi_params /etc/nginx/fastcgi_params
 COPY fastcgi.conf /etc/nginx/fastcgi.conf
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log
-EXPOSE 80
+EXPOSE 8080
 STOPSIGNAL SIGTERM
-USER nginx
+USER www-data
 WORKDIR /var/lib/nginx
 CMD ["nginx", "-g", "daemon off;"]
