@@ -35,7 +35,7 @@ pull-base:
 	# used by debian:buster-slim
 	docker pull debian:buster-slim
 	# used by keycloak
-	docker pull jboss/keycloak:11.0.2
+	docker pull jboss/keycloak:12.0.1
 	# imago
 	docker pull philpep/imago
 
