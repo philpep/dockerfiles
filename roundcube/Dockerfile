@@ -1,9 +1,9 @@
 ARG REGISTRY
 FROM $REGISTRY/php-fpm
-ARG VERSION=1.4.9
+ARG VERSION=1.4.10
 ARG DIST=roundcubemail-$VERSION-complete.tar.gz
 ARG URL=https://github.com/roundcube/roundcubemail/releases/download/$VERSION/$DIST
-ARG SHA512=c6395757544b85693e808234f3dc6baac618ba115fb2c9eefc309ee18e74b2fdfbc0af00ac2b3b980fdd2abc56eefde47b535cdf688cfd2a5ce975786aca6572
+ARG SHA512=e0a661ae5b928ce2c93129775d32a679ad2512ca4af21e8dd1711d38a62818ff9ee1e1fc922aae68e0a8bca034ca780fc3e3e988731a2ce9b2190b2c1d8e08a6
 USER root
 # dovecotpw for password generation
 RUN apt-get update && apt-get -y install --no-install-recommends \
