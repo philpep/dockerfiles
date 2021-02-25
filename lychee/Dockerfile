@@ -1,10 +1,10 @@
 ARG REGISTRY
 FROM $REGISTRY/php-fpm
 USER root
-ARG VERSION=v3.1.6
+ARG VERSION=v4.2.2
 ARG DIST=$VERSION.tar.gz
-ARG URL=https://github.com/electerious/Lychee/archive/$DIST
-ARG SHA512=a489257c681c2973ae3683ca0059dddd8c53726c556333804e83c7f4dadfbabe9df363c95d59e12a785e3c1bed78e91930c8490097c963f9b14a1b608b041871
+ARG URL=https://github.com/LycheeOrg/Lychee/archive/$DIST
+ARG SHA512=ba0b8b59233a5b0e499b5ac512110574bc642eb8adb812c1facfa56ab4d5a0c9f6fe53be0287097b2e4407922ee93f5ece10eab35ac69a7408e8f34bd7243bc4
 RUN mkdir -p /data/lychee
 RUN wget -O $DIST $URL && \
     echo "expected SHA512=$(sha512sum $DIST)" && \
