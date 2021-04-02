@@ -3,10 +3,10 @@ FROM $REGISTRY/debian:buster-slim
 RUN apt-get update && apt-get -y install --no-install-recommends \
 	ca-certificates \
 	&& rm -rf /var/lib/apt/lists/*
-ARG VERSION=v7.0.1
+ARG VERSION=v7.1.2
 ARG DIST=oauth2-proxy-$VERSION.linux-amd64.tar.gz
 ARG URL=https://github.com/oauth2-proxy/oauth2-proxy/releases/download/$VERSION/$DIST
-ARG SHA512=f29a50bc0064a3421fa3602d0c71b447e027ec5d3569361d52c67d94f0506d76ba41796070ae0641f3f55b802dc98330b4e0198c2d9f9f6c12415660b1eb83b4
+ARG SHA512=62f8bce09c18a1c5b97cfa36cf1ff14cdc53b94a11bf0116187c56120978cffd332a36a011512dc6578de91af7b8a4069e8ef412ae58fe9376f4a636db8147b8
 RUN wget -O $DIST $URL && \
     echo "expected SHA512=$(sha512sum $DIST)" && \
     echo "$SHA512  $DIST" | sha512sum -c - && \
