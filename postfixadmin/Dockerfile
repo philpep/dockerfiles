@@ -1,9 +1,9 @@
 ARG REGISTRY
 FROM $REGISTRY/php-fpm
-ARG VERSION=3.3.7
+ARG VERSION=3.3.8
 ARG DIST=postfixadmin-$VERSION.tar.gz
 ARG URL=https://github.com/postfixadmin/postfixadmin/archive/$DIST
-ARG SHA512=c635b885235f2683532ff4fcd6d3e123fa5af8314cfcdbcdf412d7242444bb9c040a6eeb2f6b0669b9f5dd9fc56c53127779727768c68699885cc642717453ca
+ARG SHA512=bfe5d874083568f1e8b1830394338d2aa29e39e30834d4c8c728836495f12f6d49c65b83b1fae1fce20e7456afaef0058320033866b720a5858911ceec22a022
 USER root
 # dovecotpw for password generation
 RUN apt-get update && apt-get -y install --no-install-recommends \
