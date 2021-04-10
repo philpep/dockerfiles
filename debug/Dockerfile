@@ -8,4 +8,5 @@ RUN apt-get update && apt-get -y install --no-install-recommends \
     jq \
     mariadb-client \
     postgresql-client \
+    rsync \
     && rm -rf /var/lib/apt/lists/*
