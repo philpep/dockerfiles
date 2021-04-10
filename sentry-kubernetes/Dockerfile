@@ -1,9 +1,9 @@
 ARG REGISTRY
 FROM $REGISTRY/debian:buster-slim
-RUN apt-get update && apt-get -y install --no-install-recommends \
-	python3-pip \
-	python3-yaml \
-	&& rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get -y install \
+    python3-pip \
+    python3-yaml \
+    && rm -rf /var/lib/apt/lists/*
 RUN python3 -m pip install --disable-pip-version-check --no-cache-dir kubernetes raven
 ADD https://raw.githubusercontent.com/getsentry/sentry-kubernetes/521b5129/sentry-kubernetes.py /usr/local/bin/
 RUN chmod a+r /usr/local/bin/sentry-kubernetes.py

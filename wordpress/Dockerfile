@@ -2,7 +2,7 @@ ARG REGISTRY
 FROM $REGISTRY/php-fpm
 USER root
 # python3 required for check_wordpress script
-RUN apt-get update && apt-get -y install --no-install-recommends \
+RUN apt-get update && apt-get -y install \
     python3 \
     && rm -rf /var/lib/apt/lists/*
 COPY check_wordpress /usr/local/bin/

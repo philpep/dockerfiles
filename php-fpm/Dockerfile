@@ -1,6 +1,6 @@
 ARG REGISTRY
 FROM $REGISTRY/debian:buster-slim
-RUN apt-get update && apt-get -y install --no-install-recommends \
+RUN apt-get update && apt-get -y install \
     php-fpm \
     php-soap \
     php-gmp \
@@ -22,7 +22,6 @@ RUN apt-get update && apt-get -y install --no-install-recommends \
     php-imagick \
     php-gd \
     php-bcmath \
-    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 RUN sed -i "s@error_log =.*@error_log = /dev/stderr@g" /etc/php/7.3/fpm/php-fpm.conf
 RUN sed -i "s@pid =.*@;pid = /dev/null@g" /etc/php/7.3/fpm/php-fpm.conf

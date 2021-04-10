@@ -1,16 +1,10 @@
 ARG REGISTRY
 FROM $REGISTRY/debian:buster-slim
-RUN apt-get update && apt-get -y install --no-install-recommends \
-    wget \
-    gnupg2 \
-    ca-certificates \
+RUN apt-get update && apt-get -y install \
     gunicorn3 \
     python3-pygments \
     python3-eventlet \
-    && rm -rf /var/lib/apt/lists/*
-RUN wget -O - https://apt.philpep.org/key.asc | apt-key --keyring /etc/apt/trusted.gpg.d/philpep.gpg add -
-RUN echo "deb http://apt.philpep.org buster-backports main" > /etc/apt/sources.list.d/philpep.list
-RUN apt-get update && apt-get -y -t buster-backports install --no-install-recommends \
+    && apt-get -y -t buster-backports install \
     mercurial \
     mercurial-evolve \
     && rm -rf /var/lib/apt/lists/*

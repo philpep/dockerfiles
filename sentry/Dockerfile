@@ -2,8 +2,8 @@ ARG REGISTRY
 FROM $REGISTRY/debian:buster-slim
 ARG SENTRY_VERSION=9.1.2
 RUN apt-get -y update && \
-    apt-get -y install --no-install-recommends \
-	python-pip \
+    apt-get -y install \
+    python-pip \
     python-setuptools \
     python-wheel \
     python-setproctitle \
@@ -11,11 +11,11 @@ RUN apt-get -y update && \
     && rm -rf /var/lib/apt/lists/*
 ARG _BUILD_DEPS="gcc g++ libc6-dev python-dev"
 RUN apt-get -y update && \
-    apt-get -y install --no-install-recommends $_BUILD_DEPS && \
-	pip install --no-cache-dir --disable-pip-version-check sentry==$SENTRY_VERSION && \
+    apt-get -y install $_BUILD_DEPS && \
+    pip install --no-cache-dir --disable-pip-version-check sentry==$SENTRY_VERSION && \
     apt-get -y purge $_BUILD_DEPS && \
-	apt-get -y autoremove --purge && \
-	rm -rf /var/lib/apt/lists/*
+    apt-get -y autoremove --purge && \
+    rm -rf /var/lib/apt/lists/*
 RUN pip install --no-cache-dir --disable-pip-version-check 'sentry-auth-oidc<3'
 ENV SENTRY_CONF=/etc/sentry
 RUN sentry init $SENTRY_CONF

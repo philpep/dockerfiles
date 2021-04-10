@@ -19,6 +19,7 @@ RUN ln -s /bin/busybox /bin/ps && \
     ln -s /bin/busybox /usr/bin/uptime
 RUN wget -O - https://apt.philpep.org/key.asc | apt-key --keyring /etc/apt/trusted.gpg.d/philpep.gpg add -
 RUN echo "deb https://apt.philpep.org buster-backports main" > /etc/apt/sources.list.d/philpep.list
+RUN echo "deb http://deb.debian.org/debian buster-backports main contrib non-free" > /etc/apt/sources.list.d/backports.list
 RUN apt-get -y update && \
     apt-get -y upgrade && \
     rm -rf /var/lib/apt/lists/*

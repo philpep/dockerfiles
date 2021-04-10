@@ -1,6 +1,6 @@
 ARG REGISTRY
 FROM $REGISTRY/debian:buster-slim
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y \
     nginx-light \
     && rm -rf /var/lib/apt/lists/*
 RUN sed -i '/user www-data;/d' /etc/nginx/nginx.conf

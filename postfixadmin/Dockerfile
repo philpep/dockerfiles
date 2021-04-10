@@ -6,7 +6,7 @@ ARG URL=https://github.com/postfixadmin/postfixadmin/archive/$DIST
 ARG SHA512=bfe5d874083568f1e8b1830394338d2aa29e39e30834d4c8c728836495f12f6d49c65b83b1fae1fce20e7456afaef0058320033866b720a5858911ceec22a022
 USER root
 # dovecotpw for password generation
-RUN apt-get update && apt-get -y install --no-install-recommends \
+RUN apt-get update && apt-get -y install \
     dovecot-core \
     && rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /data/postfixadmin

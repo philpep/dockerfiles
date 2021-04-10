@@ -1,10 +1,9 @@
 ARG REGISTRY
 FROM $REGISTRY/debian:buster-slim
-RUN apt-get update && apt-get -y install --no-install-recommends \
+RUN apt-get update && apt-get -y install \
     postfix \
     postfix-pgsql \
     postfix-pcre \
-    ca-certificates \
     openssl \
     && rm -rf /var/lib/apt/lists/*
 RUN addgroup --gid 425 --system vmail

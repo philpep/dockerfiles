@@ -1,7 +1,7 @@
 ARG REGISTRY
 FROM $REGISTRY/php-fpm
 USER root
-RUN apt-get update && apt-get -y install --no-install-recommends \
+RUN apt-get update && apt-get -y install \
     bzip2 \
     && rm -rf /var/lib/apt/lists/*
 ARG VERSION=20.0.8

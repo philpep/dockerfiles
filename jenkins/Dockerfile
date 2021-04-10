@@ -1,25 +1,18 @@
 ARG REGISTRY
 FROM $REGISTRY/debian:buster-slim
-RUN apt-get update && apt-get -y install --no-install-recommends \
-	gnupg \
-	ca-certificates \
-	&& rm -rf /var/lib/apt/lists/*
-RUN wget -q -O - https://apt.philpep.org/key.asc | apt-key --keyring /etc/apt/trusted.gpg.d/philpep.gpg add -
-RUN echo deb https://apt.philpep.org buster-backports main > /etc/apt/sources.list.d/philpep.list
 RUN wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | apt-key --keyring /etc/apt/trusted.gpg.d/jenkins.gpg add -
 RUN echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list
-RUN apt-get update && apt-get -y install --no-install-recommends -t buster-backports \
-	mercurial \
-	&& rm -rf /var/lib/apt/lists/*
-RUN apt-get update && apt-get -y install --no-install-recommends \
+RUN apt-get update && apt-get -y install -t buster-backports \
+    mercurial \
+    && apt-get -y install \
     git \
     openssh-client \
     curl \
     unzip \
     tox \
-	jenkins \
+    jenkins \
     openjdk-11-jdk-headless \
-	&& rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 COPY jenkins-support install-plugins.sh jenkins.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/*.sh
 #ENV PATH=/usr/share/binfmts:$PATH

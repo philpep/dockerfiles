@@ -6,7 +6,7 @@ ARG URL=https://github.com/roundcube/roundcubemail/releases/download/$VERSION/$D
 ARG SHA512=2bfe0ff3716f76bf9eb5bf5f7b62c738b233c57e67d6ac767c044d1a3a694ae003642d9cc68a18d6f6ba94135aa7ee1692db920e9127128669faee9ddf78fe80
 USER root
 # dovecotpw for password generation
-RUN apt-get update && apt-get -y install --no-install-recommends \
+RUN apt-get update && apt-get -y install \
     dovecot-core \
     && rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /data/roundcube

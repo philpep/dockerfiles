@@ -1,7 +1,6 @@
 ARG REGISTRY
 FROM $REGISTRY/debian:buster-slim
-RUN echo "deb http://deb.debian.org/debian buster-backports main contrib non-free" > /etc/apt/sources.list.d/backports.list
-RUN apt-get update && apt-get -y install -t buster-backports --no-install-recommends \
+RUN apt-get update && apt-get -y install -t buster-backports \
     rspamd \
     && rm -rf /var/lib/apt/lists/*
 RUN echo 'filename = "/dev/stdout";' > /etc/rspamd/local.d/logging.inc

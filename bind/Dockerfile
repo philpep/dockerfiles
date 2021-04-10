@@ -6,9 +6,9 @@
 # (to use dynamic zones, zones directory must be chown -R 101:101)
 ARG REGISTRY
 FROM $REGISTRY/debian:buster-slim
-RUN apt-get update && apt-get -y install --no-install-recommends \
-	bind9 \
-	&& rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get -y install \
+    bind9 \
+    && rm -rf /var/lib/apt/lists/*
 RUN rm -rf /etc/bind/*
 COPY named.conf rndc.conf /etc/bind/
 RUN touch /etc/bind/rndc-key.key \

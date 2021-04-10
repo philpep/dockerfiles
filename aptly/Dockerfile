@@ -1,15 +1,13 @@
 ARG REGISTRY
 FROM $REGISTRY/debian:buster-slim
 RUN apt-get -y update && apt-get -y install \
-	aptly \
-	graphviz \
-	wget \
-	ca-certificates \
-	uuid-runtime \
-	python3-flask \
-	python3-lxml \
-	gunicorn3 \
-	&& rm -rf /var/lib/apt/lists/*
+    aptly \
+    graphviz \
+    uuid-runtime \
+    python3-flask \
+    python3-lxml \
+    gunicorn3 \
+    && rm -rf /var/lib/apt/lists/*
 RUN useradd --home /var/lib/aptly --shell /bin/bash aptly
 RUN mkdir -p /var/lib/aptly/incoming
 RUN chown -R aptly:aptly /var/lib/aptly
