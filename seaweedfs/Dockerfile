@@ -11,5 +11,5 @@ RUN wget https://github.com/chrislusf/seaweedfs/releases/download/2.38/$DIST && 
     mv weed /usr/bin/weed
 RUN useradd --home /var/lib/seaweedfs --shell /bin/bash seaweedfs
 USER seaweedfs
-WORKDIR seaweedfs
+WORKDIR /var/lib/seaweedfs
 ENTRYPOINT ["/usr/bin/weed", "-logtostderr"]
