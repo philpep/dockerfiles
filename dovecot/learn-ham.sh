@@ -1,2 +1,2 @@
 #!/bin/sh
-exec rspamc -h localhost learn_ham
+exec rspamc -h rspamd learn_ham

@@ -1,2 +1,2 @@
 #!/bin/sh
-exec rspamc -h localhost learn_spam
+exec rspamc -h rspamd learn_spam

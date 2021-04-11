@@ -21,9 +21,9 @@ virtual_gid_maps = static:425
 local_recipient_maps = proxy:unix:passwd.byname $alias_maps $virtual_mailbox_maps
 disable_vrfy_command = yes
 message_size_limit = 51200000
-virtual_transport = lmtp:inet:localhost:24
-smtpd_milters = inet:localhost:11332
-non_smtpd_milters = inet:localhost:11332
+virtual_transport = lmtp:inet:dovecot:24
+smtpd_milters = inet:rspamd:11332
+non_smtpd_milters = inet:rspamd:11332
 milter_protocol = 6
 milter_mail_macros = i {mail_addr} {client_addr} {client_name} {auth_authen}
 milter_default_action = accept
@@ -60,7 +60,7 @@ smtpd_recipient_restrictions =
   permit_sasl_authenticated,
   reject_unauth_destination,
 smtpd_sasl_type = dovecot
-smtpd_sasl_path = inet:localhost:9993
+smtpd_sasl_path = inet:dovecot:9993
 smtpd_client_connection_rate_limit = 20
 smtpd_error_sleep_time = 10s
 smtpd_soft_error_limit = 3
