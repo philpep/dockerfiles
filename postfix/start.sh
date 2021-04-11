@@ -21,4 +21,7 @@ for fname in /etc/postfix/pgsql-transport.cf /etc/postfix/pgsql-domain.cf /etc/p
 done
 sed -i "s/@@MAILSERVER_HOSTNAME@@/$MAILSERVER_HOSTNAME/g" /etc/postfix/main.cf
 sed -i "s/@@MAILSERVER_MASQUERADE_DOMAINS@@/$MAILSERVER_MASQUERADE_DOMAINS/g" /etc/postfix/main.cf
+sed -i "s/@@MAILSERVER_SMTPD_MILTERS@@/$MAILSERVER_SMTPD_MILTERS/g" /etc/postfix/main.cf
+sed -i "s/@@MAILSERVER_SMTPD_SASL_PATH@@/$MAILSERVER_SMTPD_SASL_PATH/g" /etc/postfix/main.cf
+sed -i "s/@@MAILSERVER_VIRTUAL_TRANSPORT@@/$MAILSERVER_VIRTUAL_TRANSPORT/g" /etc/postfix/main.cf
 exec postfix start-fg

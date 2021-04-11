@@ -15,6 +15,9 @@ ENV MAILSERVER_DB_HOST=localhost
 ENV MAILSERVER_DB_NAME=postgres
 ENV MAILSERVER_HOSTNAME=smtp.example.com
 ENV MAILSERVER_MASQUERADE_DOMAINS=example.com
+ENV MAILSERVER_SMTPD_MILTERS=inet:localhost:11332
+ENV MAILSERVER_VIRTUAL_TRANSPORT=lmtp:inet:localhost:24
+ENV MAILSERVER_SMTPD_SASL_PATH=inet:localhost:9993
 COPY master.cf main.cf pgsql-transport.cf pgsql-domain.cf \
      pgsql-mailbox.cf pgsql-alias.cf smtp_header_checks /etc/postfix/
 RUN chown root:root /var/spool/postfix /var/spool/postfix/pid
