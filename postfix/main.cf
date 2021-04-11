@@ -27,6 +27,7 @@ non_smtpd_milters = @@MAILSERVER_SMTPD_MILTERS@@
 milter_protocol = 6
 milter_mail_macros = i {mail_addr} {client_addr} {client_name} {auth_authen}
 milter_default_action = accept
+internal_mail_filter_classes = bounce
 smtpd_client_restrictions =
   permit_mynetworks,
   permit
