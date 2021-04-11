@@ -1,2 +1,2 @@
 #!/bin/sh
-exec rspamc -h rspamd learn_spam
+exec rspamc -h $RSPAMD_HOSTNAME learn_spam

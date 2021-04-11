@@ -29,6 +29,7 @@ ENV MAILSERVER_DB_USER=postgres
 ENV MAILSERVER_DB_PASSWORD=postgres
 ENV MAILSERVER_DB_HOST=localhost
 ENV MAILSERVER_DB_NAME=postgres
+ENV RSPAMD_HOSTNAME=localhost
 COPY start.sh /
 RUN chmod +x /start.sh
 CMD ["/start.sh"]
