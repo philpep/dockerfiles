@@ -1,12 +1,12 @@
 # https://redis.io/
 #
-# To disable protected mode: redis-server --protected-mode no
-# To disable persistence: redis-server --appendfsync no --save ""
+# To disable persistence: redis-server --protected-mode no --appendfsync no --save ""
 ARG REGISTRY
 FROM $REGISTRY/debian:buster-slim
 RUN apt-get update && apt-get -y install \
     redis-server \
     && rm -rf /var/lib/apt/lists/*
+RUN sed -i "s@protected-mode yes@protected-mode no@g" /etc/redis/redis.conf
 USER redis
 WORKDIR /var/lib/redis
 CMD ["redis-server"]
