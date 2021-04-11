@@ -9,6 +9,7 @@ COPY multimap.conf /etc/rspamd/local.d/multimap.conf
 RUN mkdir /etc/rspamd/maps
 COPY blacklist_domain.map /etc/rspamd/maps/
 RUN sed -i 's@localhost:11334@*:11334@g' /etc/rspamd/rspamd.conf
+RUN sed -i 's@localhost:11332@*:11332@g' /etc/rspamd/rspamd.conf
 USER _rspamd
 WORKDIR /var/lib/rspamd
 CMD ["rspamd", "--no-fork", "--pid", "/dev/null"]
