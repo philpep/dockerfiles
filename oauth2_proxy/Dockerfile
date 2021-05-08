@@ -1,9 +1,9 @@
 ARG REGISTRY
 FROM $REGISTRY/debian:buster-slim
-ARG VERSION=v7.1.2
+ARG VERSION=v7.1.3
 ARG DIST=oauth2-proxy-$VERSION.linux-amd64.tar.gz
 ARG URL=https://github.com/oauth2-proxy/oauth2-proxy/releases/download/$VERSION/$DIST
-ARG SHA512=62f8bce09c18a1c5b97cfa36cf1ff14cdc53b94a11bf0116187c56120978cffd332a36a011512dc6578de91af7b8a4069e8ef412ae58fe9376f4a636db8147b8
+ARG SHA512=15877cb6c58a00d64037f685ee1219bb51885522b428e88c5deda58daa10138e1d4c51b28b9ba2129142dd122923c29e1e5fa5b1ece7a8447b7e381e0f81ea71
 RUN wget -O $DIST $URL && \
     echo "expected SHA512=$(sha512sum $DIST)" && \
     echo "$SHA512  $DIST" | sha512sum -c - && \
