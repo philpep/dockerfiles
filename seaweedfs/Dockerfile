@@ -1,9 +1,10 @@
 ARG REGISTRY
 FROM $REGISTRY/debian:buster-slim as build
 WORKDIR /tmp
+ARG VERSION=2.43
 ARG DIST=linux_amd64.tar.gz
-ARG SHA512=11bd5c704aecc9483fd8d080f2fc4004fa1cacd6f8d28c64efa6f1e9c89ef74e70f98fe31c34facface7a889e789bf8a600a5fbb3ded1201be6b503306202bbb
-RUN wget https://github.com/chrislusf/seaweedfs/releases/download/2.38/$DIST && \
+ARG SHA512=0151a50f05c800ec409b583bbe367ca33dae90621373feff464c2f690c8b69c8a513bf1ddaf94693f208e6f41b0f954ea0bcc02d8717d043c9ac71def6782733
+RUN wget https://github.com/chrislusf/seaweedfs/releases/download/$VERSION/$DIST && \
     tar xvf $DIST && \
     rm -f linux_amd64.tar.gz && \
     echo "expected SHA512=$(sha512sum weed)" && \
