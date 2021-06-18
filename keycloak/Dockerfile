@@ -1,4 +1,4 @@
-FROM jboss/keycloak:13.0.0
+FROM jboss/keycloak:14.0.0
 USER root
 RUN microdnf -y update
 RUN microdnf -y install zip
