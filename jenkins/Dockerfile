@@ -1,8 +1,8 @@
 ARG REGISTRY
-FROM $REGISTRY/debian:buster-slim
+FROM $REGISTRY/debian:bullseye-slim
 RUN wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | apt-key --keyring /etc/apt/trusted.gpg.d/jenkins.gpg add -
 RUN echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list
-RUN apt-get update && apt-get -y install -t buster-backports \
+RUN apt-get update && apt-get -y install -t bullseye-backports \
     mercurial \
     && apt-get -y install \
     git \
