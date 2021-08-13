@@ -1,5 +1,5 @@
 ARG REGISTRY
-FROM $REGISTRY/debian:buster-slim
+FROM $REGISTRY/debian:bullseye-slim
 RUN apt-get update && apt-get install -y \
     nginx-light \
     && rm -rf /var/lib/apt/lists/*
