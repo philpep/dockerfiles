@@ -2,7 +2,7 @@
 #
 # To disable persistence: redis-server --protected-mode no --appendfsync no --save ""
 ARG REGISTRY
-FROM $REGISTRY/debian:buster-slim
+FROM $REGISTRY/debian:bullseye-slim
 RUN apt-get update && apt-get -y install \
     redis-server \
     && rm -rf /var/lib/apt/lists/*
