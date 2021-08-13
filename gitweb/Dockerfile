@@ -1,5 +1,5 @@
 ARG REGISTRY
-FROM $REGISTRY/debian:buster-slim
+FROM $REGISTRY/debian:bullseye-slim
 RUN apt-get update && apt-get -y install \
     cgit \
     fcgiwrap \
