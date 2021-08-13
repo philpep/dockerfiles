@@ -1,10 +1,10 @@
 ARG REGISTRY
-FROM $REGISTRY/debian:buster-slim
+FROM $REGISTRY/debian:bullseye-slim
 RUN apt-get update && apt-get -y install \
     gunicorn3 \
     python3-pygments \
     python3-eventlet \
-    && apt-get -y -t buster-backports install \
+    && apt-get -y -t bullseye-backports install \
     mercurial \
     mercurial-evolve \
     && rm -rf /var/lib/apt/lists/*
