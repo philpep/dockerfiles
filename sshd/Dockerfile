@@ -1,5 +1,5 @@
 ARG REGISTRY
-FROM $REGISTRY/debian:buster-slim
+FROM $REGISTRY/debian:bullseye-slim
 RUN apt-get update && apt-get -y install \
     tmux \
     openssh-server \
@@ -13,7 +13,7 @@ RUN apt-get update && apt-get -y install \
     curl \
     tzdata \
     dumb-init \
-    && apt-get -y install -t buster-backports \
+    && apt-get -y install -t bullseye-backports \
     mercurial \
     mercurial-evolve \
     && rm -rf /var/lib/apt/lists/*
