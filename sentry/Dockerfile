@@ -1,5 +1,5 @@
 ARG REGISTRY
-FROM $REGISTRY/debian:bullseye-slim
+FROM $REGISTRY/debian:buster-slim
 ARG SENTRY_VERSION=9.1.2
 RUN apt-get -y update && \
     apt-get -y install \

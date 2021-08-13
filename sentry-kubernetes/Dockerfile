@@ -1,5 +1,5 @@
 ARG REGISTRY
-FROM $REGISTRY/debian:bullseye-slim
+FROM $REGISTRY/debian:buster-slim
 RUN apt-get update && apt-get -y install \
     python3-pip \
     python3-yaml \
