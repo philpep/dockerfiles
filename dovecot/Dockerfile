@@ -1,5 +1,5 @@
 ARG REGISTRY
-FROM $REGISTRY/debian:buster-slim
+FROM $REGISTRY/debian:bullseye-slim
 RUN apt-get update && apt-get -y install \
     dovecot-core \
     dovecot-imapd \
@@ -9,7 +9,6 @@ RUN apt-get update && apt-get -y install \
     dovecot-lmtpd \
     ssl-cert \
     dumb-init \
-    && apt-get -y install -t buster-backports  \
     rspamd \
     && rm -rf /var/lib/apt/lists/*
 RUN mkdir /etc/ssl/dovecot
