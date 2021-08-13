@@ -1,6 +1,6 @@
 ARG REGISTRY
-FROM $REGISTRY/debian:buster-slim
-RUN apt-get update && apt-get -y install -t buster-backports \
+FROM $REGISTRY/debian:bullseye-slim
+RUN apt-get update && apt-get -y install \
     rspamd \
     && rm -rf /var/lib/apt/lists/*
 RUN echo 'filename = "/dev/stdout";' > /etc/rspamd/local.d/logging.inc
