@@ -1,7 +1,8 @@
 ARG REGISTRY
-FROM $REGISTRY/debian:buster-slim
+FROM $REGISTRY/debian:bullseye-slim
 RUN apt-get -y update && apt-get -y install \
     aptly \
+    gnupg1 \
     graphviz \
     uuid-runtime \
     python3-flask \
@@ -16,7 +17,6 @@ COPY aptly-include aptly-snapshot-cleanup aptly-mirror-update /usr/local/bin/
 RUN chmod +x /usr/local/bin/aptly-*
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
-RUN update-alternatives --verbose --install /usr/bin/gpg gnupg /usr/bin/gpg1 50
 USER aptly
 WORKDIR /var/lib/aptly
 COPY aptly.conf .aptly.conf
