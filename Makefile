@@ -32,7 +32,6 @@ clean:
 	rm -f $(DEPENDS)
 
 pull-base:
-	docker pull debian:buster-slim
 	docker pull debian:bullseye-slim
 	docker pull jboss/keycloak:14.0.0
 	docker pull philpep/imago
