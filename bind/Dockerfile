@@ -5,7 +5,7 @@
 #   -v /path/zones:/var/run/named/zones
 # (to use dynamic zones, zones directory must be chown -R 101:101)
 ARG REGISTRY
-FROM $REGISTRY/debian:buster-slim
+FROM $REGISTRY/debian:bullseye-slim
 RUN apt-get update && apt-get -y install \
     bind9 \
     && rm -rf /var/lib/apt/lists/*
