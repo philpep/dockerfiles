@@ -1,14 +1,11 @@
 ARG REGISTRY
-FROM $REGISTRY/debian:buster-slim
+FROM $REGISTRY/debian:bullseye-slim
 ARG SENTRY_VERSION=9.1.2
-RUN apt-get -y update && \
-    apt-get -y install \
-    python-pip \
-    python-setuptools \
-    python-wheel \
-    python-setproctitle \
+RUN apt-get -y update && apt-get -y install \
+    python \
     libpython2.7 \
     && rm -rf /var/lib/apt/lists/*
+RUN wget https://bootstrap.pypa.io/pip/2.7/get-pip.py && python get-pip.py && rm get-pip.py
 ARG _BUILD_DEPS="gcc g++ libc6-dev python-dev"
 RUN apt-get -y update && \
     apt-get -y install $_BUILD_DEPS && \
