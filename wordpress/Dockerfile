@@ -7,10 +7,10 @@ RUN apt-get update && apt-get -y install \
     && rm -rf /var/lib/apt/lists/*
 COPY check_wordpress /usr/local/bin/
 RUN chmod +x /usr/local/bin/check_wordpress
-ARG VERSION=5.7.2
+ARG VERSION=5.8.2
 ARG DIST=wordpress-$VERSION.tar.gz
 ARG URL=https://wordpress.org/$DIST
-ARG SHA512=84d41dddba5c4c59a0ceb3ef2e04760c27ae811e9db5cb43484f91973dd9c5acfb66affd8f76db06dfefd77e1bd90acad1eba7ba176a5f43b28ec806f3861edb
+ARG SHA512=84f33132fb453de437f17b09abd2acf97aaea0ab30ae781204abee2c900beb2629db465d3fabdd29011d98e7fc998a0d559ddc836ce3492381565ac3304fa0d3
 RUN mkdir -p /data/wordpress
 RUN wget -O $DIST $URL && \
     echo "expected SHA512=$(sha512sum $DIST)" && \
