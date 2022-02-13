@@ -10,4 +10,8 @@ RUN wget -O $SRC https://builds.matomo.org/$SRC && \
     tar -C /data/matomo -xvzf $SRC && \
     chown -R nobody:nogroup /data/matomo && \
     rm -f $SRC
+COPY entrypoint.sh /
+RUN chmod +x /entrypoint.sh
 USER nobody
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/usr/sbin/php-fpm7.4", "--nodaemonize", "--force-stderr"]
