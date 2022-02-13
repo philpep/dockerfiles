@@ -33,7 +33,7 @@ clean:
 
 pull-base:
 	docker pull debian:bullseye-slim
-	docker pull jboss/keycloak:15.1.0
+	docker pull jboss/keycloak:16.1.1
 	docker pull philpep/imago
 
 ci:
