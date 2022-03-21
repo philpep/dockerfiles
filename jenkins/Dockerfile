@@ -41,4 +41,4 @@ WORKDIR /var/lib/jenkins
 USER jenkins
 EXPOSE 8080
 ENTRYPOINT ["/usr/local/bin/jenkins.sh"]
-CMD ["java", "-Djava.awt.headless=true", "-Xmx1G", "-Xms512M", "-jar", "/usr/share/jenkins/jenkins.war", "--httpPort=8080"]
+CMD ["java", "-Djava.awt.headless=true", "-Xmx1G", "-Xms512M", "-jar", "/usr/share/java/jenkins.war", "--httpPort=8080"]
