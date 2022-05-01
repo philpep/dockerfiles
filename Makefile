@@ -33,7 +33,7 @@ clean:
 
 pull-base:
 	docker pull debian:bullseye-slim
-	docker pull quay.io/keycloak/keycloak:17.0.1
+	docker pull quay.io/keycloak/keycloak:16.1.1
 	docker pull philpep/imago
 
 ci:

@@ -1,4 +1,4 @@
-FROM quay.io/keycloak/keycloak:17.0.1
+FROM quay.io/keycloak/keycloak:16.1.1
 USER root
 RUN microdnf -y update
 RUN microdnf -y install zip
