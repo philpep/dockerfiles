@@ -1,7 +1,7 @@
 ARG REGISTRY
 FROM $REGISTRY/php-fpm
-ARG SRC=piwik-4.9.1.tar.gz
-ARG SHA512=298ec2bc10ea48a38fd24fb3ca1c34cc82208f35d38947212c9b14d780f3ccb9f7ec45f8e7f5c9dc534f0ed0c9daa19ceee6e310ef197b5bd64b65a6b7ae856b
+ARG SRC=piwik-4.11.0.tar.gz
+ARG SHA512=f2dfba20b9aa01dd8ce089e1faaceb83a4bf749d552c520f6033235f55130390e6bfeb80f7eaff9f2a9dd9a61c84d22de3cd4001b5041a47a908fa543364ef50
 USER root
 RUN mkdir -p /data/matomo
 RUN wget -O $SRC https://builds.matomo.org/$SRC && \
