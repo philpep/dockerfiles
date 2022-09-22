@@ -42,4 +42,5 @@ ENV FUNKWHALE_URL=http://localhost:8080 \
     FUNKWHALE_WEB_WORKERS=2 \
     DATABASE_URL=postgresql://funkwhale@:5432/funkwhale \
     DJANGO_SECRET_KEY=CHANGEME
+RUN python3 manage.py collectstatic
 CMD gunicorn config.asgi:application -w $FUNKWHALE_WEB_WORKERS -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8080
