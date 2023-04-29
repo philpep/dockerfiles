@@ -1,5 +1,0 @@
-user = @@MAILSERVER_DB_USER@@
-password = @@MAILSERVER_DB_PASSWORD@@
-hosts = @@MAILSERVER_DB_HOST@@
-dbname = @@MAILSERVER_DB_NAME@@
-query = SELECT domain FROM domain WHERE domain='%s' AND backupmx = '0' AND active = '1'

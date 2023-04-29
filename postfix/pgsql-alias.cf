@@ -1,5 +1,0 @@
-user = @@MAILSERVER_DB_USER@@
-password = @@MAILSERVER_DB_PASSWORD@@
-hosts = @@MAILSERVER_DB_HOST@@
-dbname = @@MAILSERVER_DB_NAME@@
-query = SELECT goto FROM alias WHERE address='%s' AND active = '1'
