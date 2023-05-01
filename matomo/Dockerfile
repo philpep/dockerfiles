@@ -14,4 +14,4 @@ COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 USER nobody
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["/usr/sbin/php-fpm7.4", "--nodaemonize", "--force-stderr"]
+CMD ["/usr/sbin/php-fpm8.2", "--nodaemonize", "--force-stderr"]
