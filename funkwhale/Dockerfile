@@ -1,5 +1,5 @@
 ARG REGISTRY
-FROM $REGISTRY/debian:bullseye-slim
+FROM $REGISTRY/debian:bookworm-slim
 RUN apt-get update && apt-get -y install \
     unzip \
     python3-pip \
@@ -34,7 +34,7 @@ RUN wget -O $SRC $URL && \
 RUN sed -i '/^psycopg2.*/d' api/requirements/base.txt
 RUN sed -i '/^python-ldap.*/d' api/requirements/base.txt
 USER root
-RUN python3 -m pip install --no-cache -r api/requirements.txt
+RUN python3 -m pip install --break-system-packages --no-cache -r api/requirements.txt
 USER funkwhale
 WORKDIR /var/lib/funkwhale/api
 # Reference: https://dev.funkwhale.audio/funkwhale/funkwhale/raw/stable/deploy/env.prod.sample

@@ -1,5 +1,5 @@
 ARG REGISTRY
-FROM $REGISTRY/debian:bullseye-slim
+FROM $REGISTRY/debian:bookworm-slim
 RUN apt-get update && apt-get -y install \
     php-fpm \
     php-soap \
@@ -16,7 +16,7 @@ RUN apt-get update && apt-get -y install \
     php-memcached \
     php-redis \
     php-mbstring \
-    php7.4-opcache \
+    php8.2-opcache \
     php-apcu \
     php-intl \
     php-imagick \
@@ -26,12 +26,12 @@ RUN apt-get update && apt-get -y install \
     php-bcmath \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
-RUN sed -i "s@error_log =.*@error_log = /dev/stderr@g" /etc/php/7.4/fpm/php-fpm.conf
-RUN sed -i "s@pid =.*@;pid = /dev/null@g" /etc/php/7.4/fpm/php-fpm.conf
-COPY www.conf /etc/php/7.4/fpm/pool.d/www.conf
+RUN sed -i "s@error_log =.*@error_log = /dev/stderr@g" /etc/php/8.2/fpm/php-fpm.conf
+RUN sed -i "s@pid =.*@;pid = /dev/null@g" /etc/php/8.2/fpm/php-fpm.conf
+COPY www.conf /etc/php/8.2/fpm/pool.d/www.conf
 RUN install -o nobody -g nogroup -m 777 -d /data/tmp
 # Fixes: OC\HintException: [0]: Memcache \OC\Memcache\APCu not available for local cache (Is the matching PHP module installed and enabled?)
-RUN /bin/echo -ne "[apc]\napc.enable_cli = 1\n" >> /etc/php/7.4/cli/php.ini
+RUN /bin/echo -ne "[apc]\napc.enable_cli = 1\n" >> /etc/php/8.2/cli/php.ini
 USER nobody
 EXPOSE 9000/tcp
-CMD ["/usr/sbin/php-fpm7.4", "--nodaemonize", "--force-stderr"]
+CMD ["/usr/sbin/php-fpm8.2", "--nodaemonize", "--force-stderr"]

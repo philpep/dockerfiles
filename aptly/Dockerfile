@@ -1,9 +1,7 @@
 ARG REGISTRY
-FROM $REGISTRY/debian:bullseye-slim
+FROM $REGISTRY/debian:bookworm-slim
 RUN apt-get -y update && apt-get -y install \
     aptly \
-    gnupg1 \
-    gpgv1 \
     graphviz \
     uuid-runtime \
     python3-flask \

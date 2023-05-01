@@ -1,5 +1,5 @@
 ARG REGISTRY
-FROM $REGISTRY/debian:bullseye-slim
+FROM $REGISTRY/debian:bookworm-slim
 ARG VERSION=v7.3.0
 ARG DIST=oauth2-proxy-$VERSION.linux-amd64.tar.gz
 ARG URL=https://github.com/oauth2-proxy/oauth2-proxy/releases/download/$VERSION/$DIST

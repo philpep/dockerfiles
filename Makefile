@@ -32,7 +32,7 @@ clean:
 	rm -f $(DEPENDS)
 
 pull-base:
-	docker pull debian:bullseye-slim
+	docker pull debian:bookworm-slim
 	docker pull quay.io/keycloak/keycloak:19.0
 	docker pull philpep/imago
 

@@ -1,5 +1,5 @@
 ARG REGISTRY
-FROM $REGISTRY/debian:bullseye-slim
+FROM $REGISTRY/debian:bookworm-slim
 RUN apt-get update && apt-get install -y \
     nginx-light \
     && rm -rf /var/lib/apt/lists/*

@@ -1,8 +1,8 @@
 ARG REGISTRY
-FROM $REGISTRY/debian:bullseye-slim
+FROM $REGISTRY/debian:bookworm-slim
 RUN wget -q -O /etc/apt/trusted.gpg.d/jenkins.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
 RUN echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list
-RUN apt-get update && apt-get -y install -t bullseye-backports \
+RUN apt-get update && apt-get -y install -t bookworm-backports \
     mercurial \
     && apt-get -y install \
     git \
@@ -11,7 +11,7 @@ RUN apt-get update && apt-get -y install -t bullseye-backports \
     unzip \
     tox \
     jenkins \
-    openjdk-11-jdk-headless \
+    openjdk-17-jdk-headless \
     && rm -rf /var/lib/apt/lists/*
 COPY jenkins-support install-plugins.sh jenkins.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/*.sh
