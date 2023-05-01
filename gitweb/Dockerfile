@@ -3,6 +3,7 @@ FROM $REGISTRY/debian:bookworm-slim
 RUN apt-get update && apt-get -y install \
     cgit \
     fcgiwrap \
+    spawn-fcgi \
     dumb-init \
     && rm -rf /var/lib/apt/lists/*
 COPY cgitrc /etc/cgitrc
