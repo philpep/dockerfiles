@@ -4,10 +4,10 @@ USER root
 RUN apt-get update && apt-get -y install \
     bzip2 \
     && rm -rf /var/lib/apt/lists/*
-ARG VERSION=24.0.9
+ARG VERSION=26.0.7
 ARG DIST=nextcloud-$VERSION.tar.bz2
 ARG URL=https://download.nextcloud.com/server/releases/$DIST
-ARG SHA512=dcbc664f25b5a197c7ea11ec542ab1d439a665874ead6467ca857d84751805ab62afe2363c33248fb5effabf6979f9baac00f553278722229b85f0c702c433ea
+ARG SHA512=0306f60ea7cf24f4d6b807e4895af3aa83785119a1bd020f6aaa7e427b0e805a11bf5ebb719c7cfa6bba6eaacf86356db54a06ba1a83ffb82b8bd376f43e8146
 RUN mkdir -p /data/nextcloud
 RUN wget -O $DIST $URL && \
     echo "expected SHA512=$(sha512sum $DIST)" && \
