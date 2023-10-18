@@ -33,7 +33,7 @@ clean:
 
 pull-base:
 	docker pull debian:bookworm-slim
-	docker pull quay.io/keycloak/keycloak:19.0
+	docker pull quay.io/keycloak/keycloak:22.0
 	docker pull philpep/imago
 
 ci:
