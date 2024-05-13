@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY scripts /tmp/scripts
 RUN cd /tmp/scripts && zip -r /tmp/scripts.jar .
 
-FROM quay.io/keycloak/keycloak:22.0
+FROM quay.io/keycloak/keycloak:24.0
 USER root
 COPY --from=build /tmp/scripts.jar /opt/keycloak/providers/scripts.jar
 COPY themes/philpep /opt/keycloak/themes/philpep
